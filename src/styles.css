@@ -1,0 +1,61 @@
+@import "normalize.css/normalize.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Paleta de cores */
+:root{
+  --white: #F1F2F6;
+  --light-gray: #E3E7F3;
+  --dark-gray-1: #e3e7f3c0;
+  --dark-gray-2: #494A5B;
+  --red: #990000;
+}
+
+.bg-m-white{
+  background-color: var(--white);
+}
+
+.bg-m-gray1{
+  background-color: var(--light-gray);
+}
+
+.bg-m-gray2{
+  background-color: var(--dark-gray-1);
+}
+
+.bg-m-gray3{
+  background-color: var(--dark-gray-2);
+}
+
+.bg-m-red{
+  background-color: var(--red);
+}
+
+.color-m-white{
+  color: var(--white);
+}
+
+.color-m-gray1{
+  color: var(--light-gray);
+}
+
+.color-m-gray2{
+  color: var(--dark-gray-1);
+}
+
+.color-m-gray3{
+  color: var(--dark-gray-2);
+}
+
+.color-m-red{
+  color: var(--red);
+}
+
+.btn-hover:hover{
+  background-color: var(--light-gray);
+  color: var(--red);
+}
+

@@ -1,0 +1,46 @@
+<div class="card px-8">
+  <p-table [value]="historicos" [tableStyle]="{'min-width': '60rem'}">
+      <ng-template pTemplate="header">
+          <tr>
+              <th pSortableColumn="id" style="width:6%">ID <p-sortIcon field="code"></p-sortIcon></th>
+              <th pSortableColumn="data" style="width:10%">Data <p-sortIcon field="code"></p-sortIcon></th>
+              <th pSortableColumn="hora" style="width:8%">Hora <p-sortIcon field="code"></p-sortIcon></th>
+              <th pSortableColumn="pontoPartida" style="width:12.5%">Partida <p-sortIcon field="code"></p-sortIcon></th>
+              <th pSortableColumn="pontoChegada" style="width:12.5%">Chegada <p-sortIcon field="code"></p-sortIcon></th>
+              <th style="width:12.5%">Telefone M </th>
+              <th style="width:12.5%">Telefone P </th>
+              <th style="width:6%">Mais</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-historicos>
+          <tr>
+              <td>{{historicos.id}}</td>
+              <td>{{historicos.data}}</td>
+              <td>{{historicos.hora}}</td>
+              <td>{{historicos.pontoPartida}}</td>
+              <td>{{historicos.pontoChegada}}</td>
+              <td>{{historicos.telefoneMotorista}}</td>
+              <td>{{historicos.telefonePassageiros}}</td>
+              <td>
+                <div class="card flex justify-content-center">
+                  <p-sidebar [(visible)]="sidebarVisible" [fullScreen]="true">
+                    <h3>INFORMAÇÕES GERAIS DA CARONA: </h3>
+                    <p>ID da carona: {{historicos.id}}</p>
+                    <p>Data da carona: {{historicos.data}}</p>
+                    <p>Hora da carona: {{historicos.hora}}</p>
+                    <p>Ponto de partida: {{historicos.pontoPartida}}</p>
+                    <p>Ponto de chegada: {{historicos.pontoChegada}}</p>
+                    <p>Valor doado para o motorista: R$ {{historicos.valorDoado}}</p>
+                    <p>Nome do motorista: {{historicos.motoristaEnvolvido}}</p>
+                    <p>Placa do veiculo usado: {{historicos.placaDoVeiculoUsado}}</p>
+                    <p>Passageiro(s): {{historicos.passageirosEnvolvidos}}</p>
+                    <p>Telefone do motorista: {{historicos.telefoneMotorista}}</p>
+                    <p>Telefone dos passageiros: {{historicos.telefonePassageiros}}</p>
+                  </p-sidebar>
+                  <p-button (click)="sidebarVisible = true" icon="pi pi-th-large color-m-white" severity="danger"></p-button>
+                </div>
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
+</div>

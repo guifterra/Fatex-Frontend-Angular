@@ -1,0 +1,52 @@
+
+.p-inputgroup > p-password > .p-password.p-inputwrapper {
+  width: 100px;
+}
+
+.input-default{
+  width: 425px;
+  height: 50px;
+}
+
+.input-responsive,
+.input-responsive-ps{
+  width: 425px;
+}
+
+.botao-senha {
+  width: 290px;
+}
+
+.border-box{
+  box-sizing: border-box;
+}
+
+@media( max-Width: 767px ){
+  .w-30rem{
+    width: 320px;
+  }
+
+  .input-default{
+    width: 250px;
+  }
+
+  .botao-senha {
+    width: 200px;
+  }
+
+  .w-responsive{
+    max-width: 320px;
+  }
+
+  .input-responsive{
+    width: 250px;
+  }
+
+  .input-responsive-ps{
+    width: 250px;
+  }
+}
+
+
+
+

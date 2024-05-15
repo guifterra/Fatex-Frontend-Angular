@@ -1,0 +1,8 @@
+::ng-deep .p-menu .p-submenu-header {
+  color: var(--red);
+}
+
+::ng-deep .p-menu .p-menuitem > .p-menuitem-content .p-menuitem-link:hover{
+  background-color: var(--light-gray);
+  color: var(--red);
+}

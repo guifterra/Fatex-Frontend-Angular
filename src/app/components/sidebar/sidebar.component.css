@@ -1,0 +1,27 @@
+.sta-position{
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+}
+
+.btn-logout{
+  padding: 0.8rem;
+  border-radius: 50%;
+  color: var(--red);
+}
+
+.btn-logout:hover{
+  color: var(--white);
+  background-color: var(--red);
+}
+
+::ng-deep .p-button.p-button-secondary.p-button-text, .p-button-group.p-button-secondary > .p-button.p-button-text, .p-splitbutton.p-button-secondary > .p-button.p-button-text{
+  color: var(--dark-gray-2);
+  width: 100%;
+  text-align: left;
+}
+
+::ng-deep .p-button.p-button-secondary.p-button-text:hover, .p-button-group.p-button-secondary:hover > .p-button.p-button-text:hover, .p-splitbutton.p-button-secondary:hover > .p-button.p-button-text:hover{
+  background-color: var(--dark-gray-1);
+}

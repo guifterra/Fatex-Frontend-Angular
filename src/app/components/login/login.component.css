@@ -1,0 +1,27 @@
+.input-default{
+    width: 425px;
+    height: 50px;
+}
+
+.botao-senha {
+    width: 290px;
+}
+
+@media( max-Width: 767px ){
+  .w-30rem{
+    width: 320px;
+  }
+
+  .input-default{
+    width: 250px;
+  }
+
+  .botao-senha {
+    width: 200px;
+  }
+
+  .w-responsive{
+    max-width: 320px;
+  }
+}
+

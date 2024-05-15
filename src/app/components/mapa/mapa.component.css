@@ -1,0 +1,9 @@
+.box-sz{
+  box-sizing: border-box;
+}
+
+.mp-default{
+  background-image: url("../../../assets/Mapa-default.jpeg");
+  background-position: center;
+  background-size: cover;
+}

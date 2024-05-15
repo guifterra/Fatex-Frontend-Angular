@@ -1,0 +1,39 @@
+<div class="min-h-screen min-h-screen bg-m-gray2 flex justify-content-center py-5 border-box">
+    <div class="w-30rem w-responsive bg-m-white border-solid border-600 border-round-xl flex">
+      <div class="w-30rem">
+        <div class="flex w-full align-items-center py-3 justify-content-center">
+          <img class="w-7rem h-7rem -ml-5" src="../../../assets/Logo.png" alt="Logo FATEX"/>
+          <span class="font-semibold text-6xl color-m-red">FATEX</span>
+        </div>
+        <div class="px-5">
+          <form>
+            <div class="card flex justify-content-center my-5">
+              <span class="p-float-label">
+                <input class="input-default" type="email" pInputText id="email" />
+                <label for="email">Email</label>
+              </span>
+            </div>
+            <div class="card flex justify-content-center">
+              <span class="p-float-label">
+                <input class="input-default" type="password" pInputText id="password" />
+                <label for="password">Senha</label>
+              </span>
+            </div>
+            <div class="flex align-items-center justify-content-end my-3">
+              <p-button class="botao-senha"
+                label="Esqueci a Senha"
+                [link]="true"
+                severity="secondary"
+              ></p-button>
+            </div>
+            <div class="flex flex-column justify-content-center">
+              <p-button class="w-full px-5" severity="danger" label="Entrar" styleClass="min-w-full" routerLink="sistema"></p-button>
+            </div>
+          </form>
+          <div class="flex justify-content-center my-3">
+            <span class="color-m-gray3 text-center">Novo por aqui? <a class="color-m-gray3" routerLink="cadastro"><span class="underline">Cadastre-se!</span></a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
