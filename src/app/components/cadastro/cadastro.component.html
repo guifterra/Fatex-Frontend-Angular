@@ -9,33 +9,41 @@
           <form>
             <div class="card flex justify-content-center mb-5">
               <span class="p-float-label">
-                <input class="input-default" type="email" pInputText id="usu_email" name="usu_email" [(ngModel)]="usuario.usu_email" />
+                <input class="input-default" type="email" pInputText pTooltip="Digite seu Email" tooltipPosition="bottom" id="usu_email" name="usu_email" [(ngModel)]="usuario.usu_email" />
                 <label for="usu_email">Email Institucional</label>
               </span>
             </div>
             <div class="card flex justify-content-center mb-5">
               <span class="p-float-label">
-                <input class="input-default" type="text" pInputText id="usu_nome" name="usu_nome" [(ngModel)]="usuario.usu_nome" />
+                <input class="input-default" type="text" pInputText pTooltip="Digite seu Nome" tooltipPosition="bottom" id="usu_nome" name="usu_nome" [(ngModel)]="usuario.usu_nome" />
                 <label for="usu_nome">Nome</label>
               </span>
             </div>
             <div class="card flex justify-content-center mb-5">
               <span class="p-float-label">
-                <input class="input-default" type="password" pInputText id="usu_senha" name="usu_senha" [(ngModel)]="usuario.usu_senha" />
+                <input class="input-default" type="text" pInputText pTooltip="Digite seu CPF" tooltipPosition="bottom" id="usu_cpf" name="usu_cpf" [(ngModel)]="usuario.usu_cpf" />
+                <label for="usu_nome">CPF</label>
+              </span>
+            </div>
+            <div class="card flex justify-content-center mb-5">
+              <span class="p-float-label">
+                <input class="input-default" type="password" pInputText pTooltip="Digite sua Senha" tooltipPosition="bottom" id="usu_senha" name="usu_senha" [(ngModel)]="usuario.usu_senha" />
                 <label for="usu_senha">Senha</label>
               </span>
             </div>
             <div class="card flex justify-content-center mb-5">
               <span class="p-float-label">
-                <input class="input-default" type="password" pInputText id="conf-pswd" />
+                <input class="input-default" type="password" pInputText pTooltip="Repita a sua Senha" tooltipPosition="bottom" id="conf-pswd" />
                 <label for="conf-pswd">Confirme a sua senha</label>
               </span>
             </div>
-            <div class="flex justify-content-center">
+            <div class="flex flex-column justify-content-center">
+              <span class="color-m-gray3 text-center mb-5">Já possui uma conta? <a class="color-m-gray3" routerLink=""><span class="underline">Realize o Login!</span></a></span>
               <p-button class="w-full px-5" severity="danger" label="Cadastrar-se" styleClass="min-w-full" (click)="cadastrar()" ></p-button>
             </div>
           </form>
           <div class="flex justify-content-center">
+            <p-toast />
             <p class="color-m-gray3 text-center"> Ao clicar em Cadastrar-se você está concordando com os <span (click)="showDialog()" class="underline cursor-pointer">Termos de Uso</span> do FATEX.</p>
           </div>
           <p-dialog header="Termos de Uso" [(visible)]="visible" [style]="{ width: '80vw', height: '600px' }">

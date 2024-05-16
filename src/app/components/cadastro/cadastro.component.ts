@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -12,22 +12,29 @@ import { HttpClientModule } from '@angular/common/http';
 import { Usuario } from '../../modelo/Usuario';
 import { UsuarioService } from '../../services/USU_USUARIO/usuario.service';
 import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [InputTextModule, ButtonModule, CheckboxModule, FormsModule, ReactiveFormsModule, RouterLink, InputMaskModule, PasswordModule, DialogModule, RouterModule, HttpClientModule, CommonModule],
+  imports: [InputTextModule, ButtonModule, CheckboxModule, FormsModule, ReactiveFormsModule, RouterLink, InputMaskModule, PasswordModule, DialogModule, RouterModule, HttpClientModule, CommonModule, ToastModule, TooltipModule],
   templateUrl: './cadastro.component.html',
-  styleUrl: './cadastro.component.css'
+  styleUrl: './cadastro.component.css',
+  providers: [MessageService]
 })
-export class CadastroComponent {
+export class CadastroComponent implements OnInit {
   value: string | undefined;
 
   // Objeto do tipo cliente
   usuario = new Usuario();
 
-  // Contrutor para serviço
-  constructor(private servico:UsuarioService){}
+  // Contrutor para Serviço e MessageService
+  constructor(
+                private servico:UsuarioService,
+                private messageService: MessageService,
+              ){}
 
   formGroup!: FormGroup;
 
@@ -49,13 +56,13 @@ export class CadastroComponent {
           // Limpar formulario
           this.usuario = new Usuario();
           // Mensagem de sucesso
-          alert("Cliente cadastrado com sucesso!");
+          this.messageService.add({ severity: 'success', summary: 'Sucesso no cadastro', detail: 'Seu cadastro foi realizado com sucesso! Você já pode realizar seu login.', life: 3000 });
         },
         error => {
           // Tratamento de erro
           console.error("Ocorreu um erro ao cadastrar o cliente:", error);
           // Exibir alerta ao usuário
-          alert("Ocorreu um erro ao cadastrar o cliente. Por favor, tente novamente mais tarde.");
+          this.messageService.add({ severity: 'warn', summary: 'Erro inesperado', detail: 'Ocorreu um erro inesperado! Tente novamente mais tarde.', life: 3000 });
         }
       );
     }
