@@ -14,6 +14,6 @@ export class UsuarioService {
   constructor( private http:HttpClient ) { }
 
   cadastrar( obj:Usuario ):Observable<Usuario>{
-    return this.http.post<Usuario>(this.url, obj);
+    return this.http.post<Usuario>(`${this.url}/cadastro`, obj);
   }
 }
