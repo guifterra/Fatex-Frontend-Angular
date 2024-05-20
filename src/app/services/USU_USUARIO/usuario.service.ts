@@ -9,7 +9,7 @@ import { Usuario } from '../../modelo/Usuario';
 export class UsuarioService {
 
   // URL da API
-  private url:string = 'http://localhost:8080';
+  private url:string = 'http://localhost:8080/cadastro';
 
   constructor( private http:HttpClient ) { }
 
