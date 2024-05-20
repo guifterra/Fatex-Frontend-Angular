@@ -5,6 +5,8 @@ import { ButtonModule } from 'primeng/button';
 import { BtnsComponent } from './btns/btns.component';
 import { AvatarModule } from 'primeng/avatar';
 import { RouterModule } from '@angular/router';
+import { Usuario } from '../../modelo/Usuario';
+import { UsuarioService } from '../../services/USU_USUARIO/usuario.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,10 +15,6 @@ import { RouterModule } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-// export class SidebarComponent {
-//   sidebarVisible: boolean = true;
-//   userName: string = 'Username';
-// }
 
 export class SidebarComponent {
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
@@ -42,4 +40,14 @@ export class SidebarComponent {
   }
 
   sidebarVisible: boolean = false;
+
+  currentUser: Usuario | null = new Usuario();
+
+  constructor(private servico: UsuarioService) {
+
+    if(!((this.servico.getCurrentUser()) == null))
+      this.currentUser = this.servico.getCurrentUser(); // Obter dados do usuário do Local Storage
+    else
+      this.currentUser = new Usuario();
+  }
 }
