@@ -1,1 +1,5 @@
-<google-map class="relative z-1" width="100vw" height="100vh" [options]="options" [center]="center"></google-map>
+<google-map class="" width="100vw" height="100vh" [options]="options" [center]="center">
+    <map-marker *ngIf="markerPosition" [options]="markerOptions" [position]="markerPosition"></map-marker>
+    <map-marker [options]="fatecMarkerOptions" [position]="fatecMarkerPosition"></map-marker>
+</google-map>
+<app-mapa-menu-flutuante (placeChanged)="onPlaceChanged($event)"></app-mapa-menu-flutuante>

@@ -7,5 +7,6 @@ export class Usuario{
   usuDtNascimento: Date | null = null;
   usuGenero: 'M' | 'F' | 'O' | null = null;
   usuCpf: string = '';
+  usuTipo: 'PASSAGEIRO' | 'MOTORISTA' | null = null;
 
 }

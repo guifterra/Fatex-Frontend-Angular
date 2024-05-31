@@ -4,6 +4,8 @@ import { Sidebar } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { BtnsComponent } from './btns/btns.component';
 import { AvatarModule } from 'primeng/avatar';
+import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { Usuario } from '../../modelo/Usuario';
 import { UsuarioService } from '../../services/USU_USUARIO/usuario.service';
@@ -22,17 +24,17 @@ export class SidebarComponent {
     { title: "MENU", btnValues: [
                                   { icone: "pi-flag-fill" , texto: "Pedir Carona", rl: "pedir" },
                                   { icone: "pi-car" , texto: "Fornecer Carona", rl: "oferecer" },
-                                  { icone: "pi-comments" , texto: "Chat", rl: "chat" },
+                                  //{ icone: "pi-comments" , texto: "Chat", rl: "chat" },
                                   { icone: "pi-history" , texto: "Histórico", rl: "historico" },
-                                  { icone: "pi-map" , texto: "Mapa", rl: "mapa" }
+                                  //{ icone: "pi-map" , texto: "Mapa", rl: "mapa" }
                                 ]
-    },
-    { title: "CONFIGURAÇÕES ADICIONAIS", btnValues: [
-                                                      { icone: "pi-credit-card" , texto: "Pagamento", rl: "doacao" },
-                                                      { icone: "pi-question-circle" , texto: "Suporte", rl: "suporte" },
-                                                      { icone: "pi-cog" , texto: "Configurações", rl: "configuracoes" }
-                                                    ]
     }
+    // { title: "CONFIGURAÇÕES ADICIONAIS", btnValues: [
+    //                                                   { icone: "pi-credit-card" , texto: "Pagamento", rl: "doacao" },
+    //                                                   { icone: "pi-question-circle" , texto: "Suporte", rl: "suporte" },
+    //                                                   { icone: "pi-cog" , texto: "Configurações", rl: "configuracoes" }
+    //                                                 ]
+    // }
   ];
 
   closeCallback(e: Event): void {
@@ -43,11 +45,19 @@ export class SidebarComponent {
 
   currentUser: Usuario | null = new Usuario();
 
-  constructor(private servico: UsuarioService) {
+  constructor(
+    private servico: UsuarioService,
+    private router: Router
+  ) {
 
     if(!((this.servico.getCurrentUser()) == null))
       this.currentUser = this.servico.getCurrentUser(); // Obter dados do usuário do Local Storage
     else
       this.currentUser = new Usuario();
+  }
+
+  realizarLogout(){
+    this.servico.logout();
+    this.router.navigate(['/']);
   }
 }
