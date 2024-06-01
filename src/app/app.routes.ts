@@ -10,6 +10,8 @@ import { OferecerCaronaComponent } from './components/oferecer-carona/oferecer-c
 import { PedirCaronaComponent } from './components/pedir-carona/pedir-carona.component';
 import { SuporteComponent } from './components/suporte/suporte.component';
 import { SistemaComponent } from './components/sistema/sistema.component';
+import { MeusVeiculosComponent } from './components/meus-veiculos/meus-veiculos.component';
+import { MeusEnderecosComponent } from './components/meus-enderecos/meus-enderecos.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -25,6 +27,8 @@ export const routes: Routes = [
       { path: 'doacao', component: DoacaoComponent },
       { path: 'oferecer', component: OferecerCaronaComponent },
       { path: 'suporte', component: SuporteComponent },
+      { path: 'meusVeiculos', component: MeusVeiculosComponent },
+      { path: 'meusEnderecos', component: MeusEnderecosComponent },
     ],
   },
 ];

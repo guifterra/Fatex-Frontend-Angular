@@ -1,0 +1,27 @@
+@if( veiculos != [] ){
+  <div class="card px-8">
+    <p-table [value]="veiculos" [tableStyle]="{'min-width': '60rem'}">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id" style="width:20%">Placa <p-sortIcon field="code"></p-sortIcon></th>
+                <th pSortableColumn="numero" style="width:20%">Cor <p-sortIcon field="code"></p-sortIcon></th>
+                <th pSortableColumn="rua" style="width:20%">Qt de passageiros <p-sortIcon field="code"></p-sortIcon></th>
+                <th pSortableColumn="bairro" style="width:20%">Modelo <p-sortIcon field="code"></p-sortIcon></th>
+                <th pSortableColumn="cidade" style="width:20%">Marca <p-sortIcon field="code"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-veiculos>
+            <tr>
+                <td>{{veiculos.veiPlaca}}</td>
+                <td>{{veiculos.veiCor}}</td>
+                <td>{{veiculos.veiMaxPassageiros}}</td>
+                <td>{{veiculos.modelo.modNome}}</td>
+                <td>{{veiculos.marca.marNome}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+}@else{
+  <p>Voce não possui Enderecos cadastrados!</p>
+}
+  

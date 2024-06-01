@@ -1,20 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GoogleMapsModule, MapMarker, GoogleMap } from '@angular/google-maps';
+import {
+  GoogleMapsModule,
+  GoogleMap,
+  MapDirectionsService,
+} from '@angular/google-maps';
 import { MapaMenuFlutuanteComponent } from '../mapa-menu-flutuante/mapa-menu-flutuante.component';
 import { PlaceSearchResult } from '../../modelo/PlaceSearchResult';
 import { CommonModule } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mapa',
   templateUrl: './mapa.component.html',
   styleUrls: ['./mapa.component.css'],
   standalone: true,
-  imports: [GoogleMapsModule, MapaMenuFlutuanteComponent, CommonModule]
+  imports: [GoogleMapsModule, MapaMenuFlutuanteComponent, CommonModule],
 })
 export class MapaComponent implements OnInit {
-
   @ViewChild(GoogleMap) map!: GoogleMap;
-  @ViewChild(MapMarker) marker!: MapMarker;
+
+  directionsResult: google.maps.DirectionsResult | undefined;
+
+  constructor(private directionsService: MapDirectionsService) {}
 
   center!: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
@@ -25,20 +32,21 @@ export class MapaComponent implements OnInit {
     disableDefaultUI: true,
   };
   markerOptions: google.maps.MarkerOptions = { draggable: false };
-  markerPosition: google.maps.LatLngLiteral | google.maps.LatLng = { lat: 0, lng: 0 }; // Initialize with a default value
-  fatecMarkerPosition: google.maps.LatLngLiteral = { lat: -22.78594308939862, lng: -45.18143080306932, };
+  markerPosition: google.maps.LatLngLiteral = { lat: 0, lng: 0 }; // Initialize with a default value
+  fatecMarkerPosition: google.maps.LatLngLiteral = {
+    lat: -22.78594308939862,
+    lng: -45.18143080306932,
+  };
 
   fatecMarkerOptions: google.maps.MarkerOptions = {
     draggable: false,
   };
 
   ngOnInit() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.center = {
-        lat: -22.78594308939862,
-        lng: -45.18143080306932,       
-      };
-    });
+    this.center = {
+      lat: -22.78594308939862,
+      lng: -45.18143080306932,
+    };
   }
 
   onPlaceChanged(place: PlaceSearchResult) {
@@ -53,12 +61,39 @@ export class MapaComponent implements OnInit {
         lng: place.location.lng(),
       };
 
-      // Center the map and move the marker
+      // Center the map
       this.map.googleMap?.setCenter(this.center);
-      this.marker.position = this.markerPosition;
-      this.marker.options = {
-        visible: true,
-      };
+
+      // Get directions from the new marker position to the fatecMarkerPosition
+      this.getDirections(this.markerPosition, this.fatecMarkerPosition);
     }
+  }
+
+  getDirections(
+    origin: google.maps.LatLngLiteral,
+    destination: google.maps.LatLngLiteral
+  ) {
+    const request: google.maps.DirectionsRequest = {
+      origin: origin,
+      destination: destination,
+      travelMode: google.maps.TravelMode.DRIVING,
+    };
+
+    this.directionsService
+      .route(request)
+      .pipe(map((res) => res.result))
+      .subscribe((result) => {
+        this.directionsResult = result;
+      });
+  }
+
+  swapLocations() {
+    // Swap markerPosition and fatecMarkerPosition
+    const tempPosition = { ...this.markerPosition };
+    this.markerPosition = { ...this.fatecMarkerPosition };
+    this.fatecMarkerPosition = tempPosition;
+
+    // Get directions from the new positions
+    this.getDirections(this.markerPosition, this.fatecMarkerPosition);
   }
 }
