@@ -1,4 +1,4 @@
-@if( veiculos != [] ){
+@if( veiculos != [] && veiculos.length != 0 ){
   <div class="card px-8">
     <p-table [value]="veiculos" [tableStyle]="{'min-width': '60rem'}">
         <ng-template pTemplate="header">
@@ -24,4 +24,4 @@
 }@else{
   <p>Voce não possui Enderecos cadastrados!</p>
 }
-  
+

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HistoricoItems } from '../../../domain/itemDoHistorico';
-import { HistoricoService } from '../../../services/historicoService';
-
+import { Carona } from '../../../modelo/Carona';
+import { CaronaService } from '../../../services/CAR_CARONAS/carona.service';
 import { TableModule } from 'primeng/table';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
@@ -15,14 +14,17 @@ import { ButtonModule } from 'primeng/button';
 })
 
 export class TabelaComponent implements OnInit {
-  historicos!: HistoricoItems[];
+
+  caronas: Carona[] = [];
   sidebarVisible: boolean = false;
-  
-  constructor(private historicoService: HistoricoService) {}
+
+  constructor(private caronaService: CaronaService) {}
 
   ngOnInit() {
-      this.historicoService.getHistoricosMini().then((data) => {
-          this.historicos = data;
-      });
+
+    this.caronaService.getHistoricoCaronas().subscribe((data: Carona[]) => {
+      console.log(data)
+      this.caronas = data;
+    });
   }
 }
