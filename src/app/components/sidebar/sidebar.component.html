@@ -37,7 +37,8 @@
                 </div>
                 @for(btn of item.btnValues; track btn){
                   <ul class="list-none p-0 m-0 overflow-hidden mb-2">
-                    <li>
+                    <li (click)="setActiveButton(btn.rl)"
+                    [ngClass]="{'active': activeButton === btn.rl}">
                       <p-button label="{{ btn.texto }}" icon="pi {{ btn.icone }}" severity="secondary" [plain]="true" [text]="true" routerLink="{{btn.rl}}"></p-button>
                     </li>
                   </ul>

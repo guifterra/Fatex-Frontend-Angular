@@ -9,11 +9,12 @@ import { RouterLink } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { Usuario } from '../../modelo/Usuario';
 import { UsuarioService } from '../../services/USU_USUARIO/usuario.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [SidebarModule, ButtonModule, BtnsComponent, AvatarModule, RouterModule],
+  imports: [SidebarModule, ButtonModule, BtnsComponent, AvatarModule, RouterModule, CommonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
@@ -22,13 +23,13 @@ export class SidebarComponent {
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
   itensMenu: any = [
     { title: "MENU", btnValues: [
-                                  { icone: "pi-flag-fill" , texto: "Pedir Carona", rl: "pedir" },
+                                  { icone: "pi-flag-fill" , texto: "Pedir Carona", rl: "/sistema" },
                                   { icone: "pi-map" , texto: "Fornecer Carona", rl: "oferecer" },
                                   //{ icone: "pi-comments" , texto: "Chat", rl: "chat" },
                                   { icone: "pi-history" , texto: "Histórico", rl: "historico" },
                                   //{ icone: "pi-map" , texto: "Mapa", rl: "mapa" }
-                                  { icone: "pi-car" , texto: "Meus Veiculos", rl: "meusVeiculos" },
-                                  { icone: "pi-warehouse" , texto: "Meus Enderecos", rl: "meusEnderecos" },
+                                  { icone: "pi-car" , texto: "Meus Veículos", rl: "meusVeiculos" },
+                                  { icone: "pi-warehouse" , texto: "Meus Endereços", rl: "meusEnderecos" },
                                 ]
     }
     // { title: "CONFIGURAÇÕES ADICIONAIS", btnValues: [
@@ -42,6 +43,8 @@ export class SidebarComponent {
   closeCallback(e: Event): void {
       this.sidebarRef.close(e);
   }
+
+  activeButton: string | null = '/sistema';  // Variable to track the active button
 
   sidebarVisible: boolean = false;
 
@@ -61,5 +64,9 @@ export class SidebarComponent {
   realizarLogout(){
     this.servico.logout();
     this.router.navigate(['/']);
+  }
+
+  setActiveButton(rl: string) {
+    this.activeButton = rl;
   }
 }

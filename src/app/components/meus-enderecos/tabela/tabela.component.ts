@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-tabela-2',
   standalone: true,
-  imports: [TableModule, SidebarModule, ButtonModule],
+  imports: [TableModule, SidebarModule, ButtonModule, ],
   templateUrl: './tabela.component.html',
   styleUrls: ['./tabela.component.css']
 })

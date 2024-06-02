@@ -1,5 +1,34 @@
 <div class="max-w-screen min-h-screen justiy-content-center pb-6">
-  <h2 class="color-m-red text-center text-5xl font-medium">Meus Enderecos</h2>
+  <h2 class="color-m-red text-center text-5xl font-medium">Meus Endereços</h2>
+  <p class="text-center pb-3">Insira um endereço</p>
+  <form>
+    <div class="card flex justify-content-center mb-5">
+      <span class="p-float-label">
+        <input
+          class="input-default"
+          type="text"
+          pInputText
+          pTooltip="Digite o Endereço"
+          tooltipPosition="bottom"
+          id="autocomplete"
+          name="autocomplete"
+          placeholder="Insira o endereço"
+          #autoInput
+        />
+        <label for="autocomplete">Endereço</label>
+      </span>
+    </div>
+    <div class="flex flex-column justify-content-center">
+      <p-toast></p-toast>
+      <p-button
+        class="w-full px-5"
+        severity="danger"
+        label="Adicionar Endereço"
+        styleClass="min-w-full"
+        (click)="addEndereco()"
+      ></p-button>
+    </div>
+  </form>
   <div>
     <app-tabela-2></app-tabela-2>
   </div>

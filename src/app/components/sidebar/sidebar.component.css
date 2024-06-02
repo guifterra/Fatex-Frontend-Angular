@@ -5,6 +5,10 @@
   z-index: 2;
 }
 
+.active {
+  background-color: var(--dark-gray-1); /* or any color you want */
+}
+
 .btn-logout{
   padding: 0.8rem;
   border-radius: 50%;

@@ -1,5 +1,93 @@
-<div class="max-w-screen min-h-screen justiy-content-center pb-6">
-  <h2 class="color-m-red text-center text-5xl font-medium">Meus Veiculos</h2>
+<div class="max-w-screen min-h-screen justify-content-center pb-6">
+  <h2 class="color-m-red text-center text-5xl font-medium">Meus Veículos</h2>
+  <form>
+    <div class="card flex justify-content-center mb-5">
+      <span class="p-float-label">
+        <input
+          class="input-default"
+          type="text"
+          pInputText
+          pTooltip="Digite a Placa"
+          tooltipPosition="bottom"
+          id="placa"
+          name="placa"
+          [(ngModel)]="veiculo.veiPlaca"
+        />
+        <label for="placa">Placa do Veículo</label>
+      </span>
+    </div>
+
+    <div class="card flex justify-content-center mb-5">
+      <span class="p-float-label">
+        <input
+          class="input-default"
+          type="number"
+          pInputText
+          pTooltip="Digite o Número"
+          tooltipPosition="bottom"
+          id="maxPassageiros"
+          name="maxPassageiros"
+          [(ngModel)]="veiculo.veiMaxPassageiros"
+        />
+        <label for="maxPassageiros">Qt máxima de passageiros</label>
+      </span>
+    </div>
+
+    <div class="card flex justify-content-center mb-5">
+      <span class="p-float-label">
+        <input
+          class="input-default"
+          type="text"
+          pInputText
+          pTooltip="Digite a Cor do veículo"
+          tooltipPosition="bottom"
+          id="cor"
+          name="cor"
+          [(ngModel)]="veiculo.veiCor"
+        />
+        <label for="cor">Cor do Veículo</label>
+      </span>
+    </div>
+
+    <div class="card flex justify-content-center mb-5">
+      <span class="p-float-label">
+        <p-dropdown
+          [options]="marcas"
+          optionLabel="marNome"
+          placeholder="Selecione a Marca"
+          [(ngModel)]="veiculo.marca"
+          id="marca"
+          name="marca"
+        ></p-dropdown>
+        <label for="marca">Marca do Veículo</label>
+      </span>
+    </div>
+
+    <div class="card flex justify-content-center mb-5">
+      <span class="p-float-label">
+        <p-dropdown
+          [options]="modelos"
+          optionLabel="modNome"
+          placeholder="Selecione o Modelo"
+          [(ngModel)]="veiculo.modelo"
+          id="modelo"
+          name="modelo"
+        ></p-dropdown>
+        <label for="modelo">Modelo do Veículo</label>
+      </span>
+    </div>
+
+    <div class="flex flex-column justify-content-center">
+      <p-toast></p-toast>
+      <p-button
+        class="w-full px-5"
+        severity="danger"
+        label="Cadastrar Veículo"
+        styleClass="min-w-full"
+        (click)="cadastrarVeiculo()"
+      ></p-button>
+    </div>
+  </form>
   <div>
     <app-tabela-3></app-tabela-3>
   </div>
