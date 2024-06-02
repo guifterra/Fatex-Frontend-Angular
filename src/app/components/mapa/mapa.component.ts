@@ -42,6 +42,17 @@ export class MapaComponent implements OnInit {
     draggable: false,
   };
 
+  carMarkerPosition: google.maps.LatLngLiteral = { lat: -22.78594308939862, lng: -45.18143080306932 }; // Initial position
+
+  carMarkerOptions: google.maps.MarkerOptions = {
+    position: this.carMarkerPosition,
+    icon: {
+      url: '../../../assets/fatexCarro.png', // Path to your car icon image
+      scaledSize: new google.maps.Size(25, 45), // Adjust the size of the icon
+    },
+    draggable: false
+  };
+
   ngOnInit() {
     this.center = {
       lat: -22.78594308939862,
@@ -51,21 +62,35 @@ export class MapaComponent implements OnInit {
 
   onPlaceChanged(place: PlaceSearchResult) {
     if (place.location) {
+      // Update the center of the map to the selected place
       this.center = {
         lat: place.location.lat(),
         lng: place.location.lng(),
       };
-
+  
+      // Update the position of the regular marker to the selected place
       this.markerPosition = {
         lat: place.location.lat(),
         lng: place.location.lng(),
       };
-
-      // Center the map
-      this.map.googleMap?.setCenter(this.center);
-
-      // Get directions from the new marker position to the fatecMarkerPosition
-      this.getDirections(this.markerPosition, this.fatecMarkerPosition);
+  
+      // Update the position of the car marker to the selected place
+      this.carMarkerPosition = {
+        lat: place.location.lat(),
+        lng: place.location.lng(),
+      };
+  
+      // Center the map on the car marker's position
+      this.map.googleMap?.setCenter(this.carMarkerPosition);
+  
+      // Update the options for the car marker to reflect its new position
+      this.carMarkerOptions = {
+        ...this.carMarkerOptions,
+        position: this.carMarkerPosition,
+      };
+  
+      // Get directions from the car marker's position to the fatec marker's position
+      this.getDirections(this.carMarkerPosition, this.fatecMarkerPosition);
     }
   }
 

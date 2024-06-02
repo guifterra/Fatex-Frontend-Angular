@@ -1,3 +1,8 @@
+.background-fatex {
+  background-image: url(../../../assets/fatexBackground.png);
+  background-repeat: no-repeat;
+  backdrop-filter: blur(2px);
+}
 
 .p-inputgroup > p-password > .p-password.p-inputwrapper {
   width: 100px;

@@ -1,9 +1,10 @@
-import { Component, ElementRef, Input, NgZone, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { PlaceSearchResult } from '../../modelo/PlaceSearchResult';
+import { PlaceService } from '../../services/place-service.service';
 
 @Component({
   selector: 'app-mapa-menu-flutuante',
@@ -19,10 +20,11 @@ export class MapaMenuFlutuanteComponent implements OnInit {
 
   @Input() placeholder = '';
 
-  @Output() placeChanged = new EventEmitter<PlaceSearchResult>();
+  @Output() placeChanged: EventEmitter<PlaceSearchResult> = new EventEmitter<PlaceSearchResult>(); // Declare placeChanged event
+
   @Output() swapLocations = new EventEmitter<void>();
 
-  constructor(private ngZone: NgZone) { }
+  constructor(private ngZone: NgZone, private placeService: PlaceService) { }
 
   autocomplete: google.maps.places.Autocomplete | undefined;
   userAddress: string = '';
@@ -71,10 +73,13 @@ export class MapaMenuFlutuanteComponent implements OnInit {
           name: '',
           location: undefined,
         };
-      
+
         console.log("User Input Location:", userInputResult);
-        this.placeChanged.emit(userInputResult);
+        this.placeService.emitPlaceChange(userInputResult);
         this.userAddress = this.userInput.nativeElement.value;
+
+        this.placeChanged.emit(userInputResult);
+
       });
     });
   }
@@ -82,7 +87,6 @@ export class MapaMenuFlutuanteComponent implements OnInit {
   onSwapLocations(event: Event) {
     event.preventDefault();
     this.swapLocations.emit();
-    
 
     // Swap user and FATEC addresses
     const tempAddress = this.userAddress;
@@ -109,12 +113,17 @@ export class MapaMenuFlutuanteComponent implements OnInit {
       name: '',
       location: undefined,
     };
-  
+
     const fatecResult: PlaceSearchResult = this.fatecResult;
-  
+
     console.log("User Input Location:", userInputResult);
     console.log("FATEC Location:", fatecResult);
-    this.placeChanged.emit(userInputResult);
-    this.placeChanged.emit(fatecResult);
+    this.placeService.emitPlaceChange(userInputResult).subscribe((data: PlaceSearchResult) => {
+      console.log("PRO BACK - User Location:", data)
+    });
+    this.placeService.emitPlaceChange(fatecResult).subscribe((data: PlaceSearchResult) => {
+      console.log("PRO BACK - FATEC Location:", data)
+    });;
+
   }
 }
