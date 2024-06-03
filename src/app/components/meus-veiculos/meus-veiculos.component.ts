@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
 import { TabelaComponent } from './tabela/tabela.component';
 import { Veiculo } from '../../modelo/Veiculo';
 import { VeiculoService } from '../../services/VEI_VEICULOS/veiculo.service';
 import { MessageService } from 'primeng/api';
 import { JsonMotVei } from '../../modelo/JsonMotVei';
-import { Modelo } from '../../modelo/Modelo';
-import { ModeloService } from '../../services/MOD_MODELOS/modelo.service';
-import { Marca } from '../../modelo/Marca';
-import { MarcaService } from '../../services/MAR_MARCAS/marca.service';
 import { Modelo } from '../../modelo/Modelo';
 import { ModeloService } from '../../services/MOD_MODELOS/modelo.service';
 import { Marca } from '../../modelo/Marca';
@@ -23,12 +18,10 @@ import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
-import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-meus-veiculos',
   standalone: true,
-  imports: [TabelaComponent, ToastModule, ButtonModule, InputTextModule, DialogModule, CommonModule, TooltipModule, FormsModule, DropdownModule],
   imports: [TabelaComponent, ToastModule, ButtonModule, InputTextModule, DialogModule, CommonModule, TooltipModule, FormsModule, DropdownModule],
   templateUrl: './meus-veiculos.component.html',
   styleUrl: './meus-veiculos.component.css',
@@ -41,28 +34,11 @@ export class MeusVeiculosComponent implements OnInit {
   modelos: Modelo[] = [];
 
   jsonMotVei: JsonMotVei = new JsonMotVei();
-  marcas: Marca[] = [];
-  modelos: Modelo[] = [];
-
-  jsonMotVei: JsonMotVei = new JsonMotVei();
 
   constructor(
     private veiculoService: VeiculoService,
     private motoristaService: MotoristaService,
     private messageService: MessageService,
-    private marcaService: MarcaService,
-    private modeloService: ModeloService
-  ) {}
-
-  ngOnInit() {
-    this.marcaService.getMarcas().subscribe((data: Marca[]) => {
-      this.marcas = data;
-    });
-
-    this.modeloService.getModelos().subscribe((data: Modelo[]) => {
-      this.modelos = data;
-    });
-  }
     private marcaService: MarcaService,
     private modeloService: ModeloService
   ) {}
@@ -99,7 +75,6 @@ export class MeusVeiculosComponent implements OnInit {
               life: 3000,
             });
 
-            // Depois trocar pela emissao de um evento para tabela recargar o metodo de puxar os veiculos
             // Depois trocar pela emissao de um evento para tabela recargar o metodo de puxar os veiculos
             setTimeout(() => {
               window.location.reload();
