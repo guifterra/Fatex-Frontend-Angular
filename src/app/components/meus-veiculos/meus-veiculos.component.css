@@ -6,3 +6,23 @@
 :host ::ng-deep .p-dropdown {
   width: 425px;
 }
+
+.btn-ajust{
+  margin: 0 auto;
+}
+
+form{
+  background-color: var(--dark-gray-1);
+  padding: 20px 0px 40px 0px;
+}
+
+@media( max-Width: 767px ){
+
+  .input-default{
+    width: 250px;
+  }
+
+  :host ::ng-deep .p-dropdown {
+    width: 250px;
+  }
+}

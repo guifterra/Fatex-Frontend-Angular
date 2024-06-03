@@ -69,7 +69,7 @@
     width: 250px;
   }
 
-  :host ::ng-deep .p-inputmask input {
+  :host ::ng-deep .p-inputmask {
     width: 250px;
   }
 }
