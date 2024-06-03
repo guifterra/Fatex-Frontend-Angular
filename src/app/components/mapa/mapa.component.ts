@@ -17,6 +17,9 @@ import { map } from 'rxjs/operators';
   imports: [GoogleMapsModule, MapaMenuFlutuanteComponent, CommonModule],
 })
 export class MapaComponent implements OnInit {
+
+  carMarkerVisible: boolean = false;
+
   @ViewChild(GoogleMap) map!: GoogleMap;
 
   directionsResult: google.maps.DirectionsResult | undefined;
@@ -58,6 +61,7 @@ export class MapaComponent implements OnInit {
       lat: -22.78594308939862,
       lng: -45.18143080306932,
     };
+    
   }
 
   onPlaceChanged(place: PlaceSearchResult) {
@@ -79,7 +83,7 @@ export class MapaComponent implements OnInit {
         lat: place.location.lat(),
         lng: place.location.lng(),
       };
-  
+
       // Center the map on the car marker's position
       this.map.googleMap?.setCenter(this.carMarkerPosition);
   
@@ -91,8 +95,11 @@ export class MapaComponent implements OnInit {
   
       // Get directions from the car marker's position to the fatec marker's position
       this.getDirections(this.carMarkerPosition, this.fatecMarkerPosition);
+
+      // Set carMarkerVisible to true
+      this.carMarkerVisible = true;
     }
-  }
+}
 
   getDirections(
     origin: google.maps.LatLngLiteral,
@@ -113,12 +120,21 @@ export class MapaComponent implements OnInit {
   }
 
   swapLocations() {
+    // Log the carMarkerPosition before updating
+    console.log('Before updating carMarkerPosition:', this.carMarkerPosition);
+    
     // Swap markerPosition and fatecMarkerPosition
     const tempPosition = { ...this.markerPosition };
     this.markerPosition = { ...this.fatecMarkerPosition };
     this.fatecMarkerPosition = tempPosition;
+    
+    // Update the car marker position to the new position
+    this.carMarkerPosition = { ...this.fatecMarkerPosition };
+
+    // Log the carMarkerPosition after updating
+    console.log('After updating carMarkerPosition:', this.carMarkerPosition);
 
     // Get directions from the new positions
     this.getDirections(this.markerPosition, this.fatecMarkerPosition);
-  }
+}
 }

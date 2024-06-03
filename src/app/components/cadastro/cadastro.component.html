@@ -1,3 +1,4 @@
+<!-- cadastro.component.html -->
 <div
   class="min-h-screen background-fatex flex justify-content-center align-items-center py-5 border-box"
 >
@@ -14,10 +15,11 @@
         <span class="font-semibold text-6xl color-m-red">FATEX</span>
       </div>
       <div class="px-5">
-        <form>
+        <form [formGroup]="formGroup" (ngSubmit)="cadastrar()">
           <div class="card flex justify-content-center mb-5">
             <span class="p-float-label">
               <input
+                formControlName="usuEmail"
                 class="input-default"
                 type="email"
                 pInputText
@@ -25,7 +27,6 @@
                 tooltipPosition="bottom"
                 id="usuEmail"
                 name="usuEmail"
-                [(ngModel)]="usuario.usuEmail"
               />
               <label for="usuEmail">Email Institucional</label>
             </span>
@@ -33,6 +34,7 @@
           <div class="card flex justify-content-center mb-5">
             <span class="p-float-label">
               <input
+                formControlName="usuNome"
                 class="input-default"
                 type="text"
                 pInputText
@@ -40,44 +42,53 @@
                 tooltipPosition="bottom"
                 id="usuNome"
                 name="usuNome"
-                [(ngModel)]="usuario.usuNome"
               />
-              <label for="usuNome">Nome</label>
+              <label for="usuNome">Nome Completo</label>
             </span>
           </div>
           <div class="card flex justify-content-center mb-5">
             <span class="p-float-label">
-              <input
-                class="input-default"
-                type="text"
-                pInputText
-                pTooltip="Digite seu CPF"
-                tooltipPosition="bottom"
-                id="usuCpf"
-                name="usuCpf"
-                [(ngModel)]="usuario.usuCpf"
-              />
-              <label for="usuCpf">CPF</label>
+            <p-inputMask
+              mask="999.999.999-99"
+              formControlName="usuCpf"
+              class="input-default"
+            ></p-inputMask>
+            <label for="usuCpf">CPF</label>
             </span>
           </div>
-          <div class="card flex justify-content-center mb-5">
+          
+          <div class="card flex justify-content-center">
             <span class="p-float-label">
-              <input
-                class="input-default"
-                type="password"
-                pInputText
-                pTooltip="Digite sua Senha"
-                tooltipPosition="bottom"
-                id="usuSenha"
-                name="usuSenha"
-                [(ngModel)]="usuario.usuSenha"
-              />
-              <label for="usuSenha">Senha</label>
-            </span>
+            <p-password
+              formControlName="usuSenha"
+              id="usuSenha"
+              name="usuSenha"
+              class="input-default"
+              pTooltip="Digite sua Senha"
+              tooltipPosition="bottom"
+              p-password-info="Insira sua senha"
+            >
+              <ng-template pTemplate="header">
+                <h4>Escolha uma senha</h4>
+              </ng-template>
+              <ng-template pTemplate="footer">
+                <p-divider></p-divider>
+                <p class="mt-2">Obrigatório</p>
+                <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                  <li>Pelo menos uma letra minúscula</li>
+                  <li>Pelo menos uma letra maiúscula</li>
+                  <li>Pelo menos um número</li>
+                  <li>Pelo menos 6 caracteres</li>
+                </ul>
+              </ng-template>
+            </p-password>
+            <label for="usuCpf">Senha</label>
+          </span>
           </div>
-          <div class="card flex justify-content-center mb-5">
+          <div class="card flex justify-content-center mt-5 mb-5">
             <span class="p-float-label">
               <input
+                formControlName="confSenha"
                 class="input-default"
                 type="password"
                 pInputText
@@ -90,20 +101,27 @@
           </div>
 
           <div class="card flex justify-content-center mb-5">
-            <select name="tipoDeConta" id="tipoDeConta" [(ngModel)]="tipoDeContaSelecionado" (ngModelChange)="onTipoDeContaChange($event)">
-              <option value="" disabled selected>Selecione o tipo de conta</option>
-              <option *ngFor="let tipo of tipoDeConta" [value]="tipo.code">{{tipo.name}}</option>
+            <select
+              formControlName="tipoDeConta"
+              name="tipoDeConta"
+              id="tipoDeConta"
+            >
+              <option value="" disabled selected>
+                Selecione o tipo de conta
+              </option>
+              <option *ngFor="let tipo of tipoDeConta" [value]="tipo.code">
+                {{ tipo.name }}
+              </option>
             </select>
           </div>
-          
 
           <div class="flex flex-column justify-content-center">
             <span class="color-m-gray3 text-center mb-5"
               >Já possui uma conta?
               <a class="color-m-gray3" routerLink=""
                 ><span class="underline">Realize o Login!</span></a
-              ></span
-            >
+              >
+            </span>
             <p-button
               class="w-full px-5"
               severity="danger"
@@ -114,7 +132,7 @@
           </div>
         </form>
         <div class="flex justify-content-center">
-          <p-toast />
+          <p-toast></p-toast>
           <p class="color-m-gray3 text-center">
             Ao clicar em Cadastrar-se você está concordando com os
             <span (click)="showDialog()" class="underline cursor-pointer"

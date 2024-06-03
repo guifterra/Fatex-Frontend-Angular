@@ -1,7 +1,8 @@
 .background-fatex {
   background-image: url(../../../assets/fatexBackground.png);
   background-repeat: no-repeat;
-  backdrop-filter: blur(2px);
+  background-position: center;
+  background-size: cover;
 }
 
 .p-inputgroup > p-password > .p-password.p-inputwrapper {
@@ -22,8 +23,21 @@
   width: 290px;
 }
 
+
 .border-box{
   box-sizing: border-box;
+}
+
+:host ::ng-deep .p-password input {
+  width: 425px;
+}
+
+:host ::ng-deep .p-inputmask {
+  width: 425px;
+}
+
+:host ::ng-deep .p-password .p-password-info {
+  display: none;
 }
 
 @media( max-Width: 767px ){
@@ -50,7 +64,16 @@
   .input-responsive-ps{
     width: 250px;
   }
+
+  :host ::ng-deep .p-password input {
+    width: 250px;
+  }
+
+  :host ::ng-deep .p-inputmask input {
+    width: 250px;
+  }
 }
+
 
 
 

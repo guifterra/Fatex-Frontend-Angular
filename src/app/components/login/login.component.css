@@ -1,7 +1,8 @@
 .background-fatex {
   background-image: url(../../../assets/fatexBackground.png);
   background-repeat: no-repeat;
-  backdrop-filter: blur(2px);
+  background-position: center;
+  background-size: cover;
 }
 
 .input-default{

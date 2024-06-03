@@ -2,7 +2,7 @@
     <map-marker *ngIf="!directionsResult && markerPosition" [options]="markerOptions" [position]="markerPosition"></map-marker>
     <map-marker *ngIf="!directionsResult" [options]="fatecMarkerOptions" [position]="fatecMarkerPosition"></map-marker>
     <map-directions-renderer *ngIf="directionsResult" [directions]="directionsResult"></map-directions-renderer>
-    <map-marker [options]="carMarkerOptions"></map-marker>
+    <map-marker [options]="carMarkerOptions" *ngIf="carMarkerVisible"></map-marker>
   </google-map>
   <app-mapa-menu-flutuante (placeChanged)="onPlaceChanged($event)" (swapLocations)="swapLocations()"></app-mapa-menu-flutuante>
   
