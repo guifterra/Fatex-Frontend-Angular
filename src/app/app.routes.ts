@@ -12,6 +12,7 @@ import { SuporteComponent } from './components/suporte/suporte.component';
 import { SistemaComponent } from './components/sistema/sistema.component';
 import { MeusVeiculosComponent } from './components/meus-veiculos/meus-veiculos.component';
 import { MeusEnderecosComponent } from './components/meus-enderecos/meus-enderecos.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -29,6 +30,7 @@ export const routes: Routes = [
       { path: 'suporte', component: SuporteComponent },
       { path: 'meusVeiculos', component: MeusVeiculosComponent },
       { path: 'meusEnderecos', component: MeusEnderecosComponent },
+      { path: 'perfil', component: PerfilComponent }
     ],
   },
 ];

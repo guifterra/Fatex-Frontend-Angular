@@ -48,6 +48,9 @@ interface TipoDeConta {
   styleUrls: ['./cadastro.component.css'],
   providers: [MessageService],
 })
+
+
+
 export class CadastroComponent implements OnInit {
   formGroup!: FormGroup;
   tipoDeConta: TipoDeConta[] = [

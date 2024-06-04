@@ -1,0 +1,135 @@
+/* Reseta o CSS padrão para evitar margem e padding padrão */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    height: 100%; /* Certifica-se de que o body e html ocupem toda a altura */
+    overflow: hidden; /* Esconde qualquer overflow na página */
+    background-color: #f7f9fc; /* Fundo suave */
+}
+
+/* Define a altura mínima da tela */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Define a altura mínima como 100% da viewport */
+    padding: 20px; /* Adiciona padding para garantir espaço ao redor do conteúdo */
+}
+
+.profile-container {
+    width: 100%;
+    max-width: 600px; /* Define uma largura máxima para o container do perfil */
+    padding: 30px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80vh; /* Define a altura para o container do perfil */
+    overflow: hidden; /* Esconde qualquer overflow */
+}
+
+.foto-perfil {
+    margin-bottom: 20px;
+}
+
+.foto-perfil img {
+    width: 150px; /* Ajuste conforme necessário */
+    height: 150px; /* Ajuste conforme necessário */
+    display: block; 
+    margin: 0 auto; 
+    border-radius: 50%;
+    
+}
+
+.p-button {
+    padding: 0.5rem 1.5rem; /* Aumenta o padding para tornar o botão maior */
+    font-size: 1rem; /* Aumenta o tamanho da fonte */
+    cursor: pointer;
+    border: none;
+    border-radius: 0.375rem; /* Define a borda arredondada */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.p-button:hover {
+    background-color: #c82333; /* Cor de fundo ao passar o mouse */
+    transform: scale(1.05); /* Aumenta o botão ligeiramente */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Adiciona sombra ao hover */
+}
+
+.bg-danger {
+    background-color: #dc3545; /* Exemplo de cor de fundo de perigo */
+    color: #fff; /* Cor do texto branca */
+}
+
+.inputs {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto; /* Adiciona barra de rolagem vertical */
+    scrollbar-width: thin; /* Define a largura da scrollbar */
+    scrollbar-color: #ccc #f0f0f0; /* Define as cores da scrollbar */
+}
+
+.input-block {
+    width: 100%; /* Certifica-se de que os itens ocupem 100% da largura do container */
+    padding: 15px 20px; /* Adiciona padding para garantir espaço ao redor do conteúdo */
+    text-align: left; /* Alinha o texto à esquerda */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer; /* Adiciona um cursor pointer */
+    border-bottom: 1px solid #eee;
+    position: relative;
+    background-color: #fff;
+    border-radius: 10px; /* Adiciona borda arredondada */
+    margin-bottom: 10px; /* Espaçamento entre os blocos */
+}
+
+.input-block:hover {
+    background-color: #f1f1f1; /* Cor de fundo ao passar o mouse */
+    
+}
+
+.input-block:hover .edit-button {
+    opacity: 1;
+    visibility: visible;
+}
+
+.edit-button {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.5rem 1.5rem; /* Aumenta o padding para tornar o botão maior */
+    font-size: 1rem; /* Aumenta o tamanho da fonte */
+    cursor: pointer;
+    border: none;
+    border-radius: 0.375rem; /* Define a borda arredondada */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #c82333; /* Cor de fundo ao passar o mouse */
+    transform: translateY(-50%) scale(1.05); /* Aumenta o botão ligeiramente */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Adiciona sombra ao hover */
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.font-semibold {
+    font-weight: 600px;
+}
