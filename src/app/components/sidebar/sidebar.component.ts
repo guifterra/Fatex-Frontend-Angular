@@ -46,7 +46,7 @@ export class SidebarComponent {
 
   activeButton: string | null = '/sistema';  // Variable to track the active button
 
-  sidebarVisible: boolean = false;
+  sidebarVisible: boolean = true;
 
   currentUser: Usuario | null = new Usuario();
 

@@ -140,7 +140,7 @@ export class CadastroComponent implements OnInit {
   cadastrar(): void {
     if (this.formGroup.valid) {
       this.usuario = this.formGroup.value;
-      this.usuario.usuTipo = this.formGroup.get('tipoDeConta')?.value;
+      this.usuario.usuTipo = (this.formGroup.get('tipoDeConta')?.value).code;
       this.usuario.usuCpf = this.formGroup.value.usuCpf.replace(/[\.-]/g, '');
       this.servico.cadastrar(this.usuario).subscribe(
         (retorno) => {

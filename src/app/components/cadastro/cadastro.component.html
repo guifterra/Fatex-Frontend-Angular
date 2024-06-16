@@ -74,19 +74,34 @@
               As senhas não são iguais.
             </div>
           </div>
+
           <div class="card flex justify-content-center flex-column mb-5">
-            <select formControlName="tipoDeConta" name="tipoDeConta" id="tipoDeConta">
+            <!-- <select formControlName="tipoDeConta" name="tipoDeConta" id="tipoDeConta">
               <option value="" disabled selected>
                 Selecione o tipo de conta
               </option>
               <option *ngFor="let tipo of tipoDeConta" [value]="tipo.code">
                 {{ tipo.name }}
               </option>
-            </select>
+            </select> -->
+
+            <span class="p-float-label">
+              <p-dropdown
+                [options]="tipoDeConta"
+                optionLabel="name"
+                placeholder="Selecione o tipo"
+                formControlName="tipoDeConta"
+                id="tipoDeConta"
+                name="tipoDeConta"
+              ></p-dropdown>
+              <label for="tipoDeConta">Tipo de Conta</label>
+            </span>
+
             <div *ngIf="formGroup.get('tipoDeConta')?.touched && formGroup.get('tipoDeConta')?.invalid" class="text-red-500">
               {{ getErrorMessage('tipoDeConta') }}
             </div>
           </div>
+
           <div class="flex flex-column justify-content-center">
             <span class="color-m-gray3 text-center mb-5">Já possui uma conta?
               <a class="color-m-gray3" routerLink=""><span class="underline">Realize o Login!</span></a>
