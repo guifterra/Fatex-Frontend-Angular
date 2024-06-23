@@ -44,6 +44,6 @@ export class VeiculoService {
   }
 
   alterarVisibilidadeDoVeiculo(obj:JsonMotVei):Observable<any> {
-    return this.http.put(`${this.url}/alterarVisibilidadeDoMeuVeiculo`, obj);
+    return this.http.put<any>(`${this.url}/alterarVisibilidadeDoMeuVeiculo`, obj);
   }
 }
