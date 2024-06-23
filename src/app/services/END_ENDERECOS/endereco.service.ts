@@ -31,4 +31,8 @@ export class EnderecoService {
       return new Observable<Endereco[]>(observer => observer.complete());
     }
   }
+
+  alterarVisibilidadeDoMeuEndereco( obj:JsonUsuEnd ):void {
+    this.http.put(`${this.url}/alterarVisibilidadeDoMeuEndereco`, obj);
+  }
 }

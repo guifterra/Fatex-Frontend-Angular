@@ -24,4 +24,8 @@ export class PassageiroService {
       return new Observable<Passageiro>(observer => observer.complete());
     }
   }
+
+  avaliarPassageiro( obj:Passageiro ): void {
+    this.http.put(`${this.url}/avaliarPassageiro`, obj);
+  }
 }

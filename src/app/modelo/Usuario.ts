@@ -1,5 +1,4 @@
 export class Usuario{
-
   usuId: number = 0;
   usuEmail: string = '';
   usuSenha: string = '';
@@ -8,5 +7,5 @@ export class Usuario{
   usuGenero: 'M' | 'F' | 'O' | null = null;
   usuCpf: string = '';
   usuTipo: 'PASSAGEIRO' | 'MOTORISTA' | null = null;
-
+  usuTelefone: string = '';
 }

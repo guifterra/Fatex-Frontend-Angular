@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Motorista } from '../../modelo/Motorista';
+import { Usuario } from '../../modelo/Usuario'; // Import Usuario model
 import { UsuarioService } from '../USU_USUARIO/usuario.service';
 
 @Injectable({
@@ -9,19 +10,39 @@ import { UsuarioService } from '../USU_USUARIO/usuario.service';
 })
 export class MotoristaService {
 
-  // URL da API
-  private url:string = 'http://localhost:8080';
+  private url: string = 'http://localhost:8080'; // URL da API
 
-  constructor( private http:HttpClient, private userService: UsuarioService ) { }
+  constructor(private http: HttpClient, private usuarioService: UsuarioService) {}
 
+  // Method to fetch Motorista details by usuId
+  getMotoristaById(usuId: number): Observable<Motorista> {
+    return this.http.get<Motorista>(`${this.url}/motoristas/${usuId}`);
+  }
+
+  // Example method to fetch statistics for the logged-in Motorista
   getEstatisticasDeMotorista(): Observable<Motorista> {
-    const currentUser = this.userService.getCurrentUser();
-    if(currentUser){
+    const currentUser: Usuario | null = this.usuarioService.getCurrentUser();
+    if (currentUser) {
       return this.http.post<Motorista>(`${this.url}/estatisticasComoMotorista`, currentUser);
     } else {
-      // Trate o caso em que não há usuário atualmente logado
-      // Por exemplo, você pode retornar um Observable vazio ou lançar um erro
+      // Handle case where there is no currently logged-in user
+      // For example, you can return an empty observable or throw an error
       return new Observable<Motorista>(observer => observer.complete());
     }
+  }
+
+  tornarSeMotorista():boolean {
+    const currentUser: Usuario | null = this.usuarioService.getCurrentUser();
+
+    if (currentUser) {
+      this.http.post(`${this.url}/tornarMeMotorista`, currentUser);
+      return true;
+    }
+
+    return false;
+  }
+
+  avaliarMotorista( obj:Motorista ):void {
+    this.http.put(`${this.url}/avaliarMotorista`, obj);
   }
 }

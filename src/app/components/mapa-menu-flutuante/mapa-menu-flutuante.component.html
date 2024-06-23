@@ -1,8 +1,62 @@
-<div class="menu-tamanho border-2 border-round bg-white absolute flex z-1 justify-content-around align-items-center posicao">
-  <div class="flex flex-column justify-content-around gap-4">
-    <input #userInput class="" type="text" [value]="userAddress" placeholder="Insira o endereço de partida"/>
-    <input #fatecInput class="bg-black-alpha-10" type="text" [value]="fatecAddress" disabled/>
+<p-dialog header="Criar Carona" [(visible)]="displayDialog" [modal]="true" [style]="{ 'max-width': '700px' }" [baseZIndex]="10000" [dismissableMask]="true">
+  <div class="">
+    <div class="flex flex-column justify-content-around gap-3">
+      <div class="flex align-items-center gap-4">
+        <div class="flex flex-column gap-2">
+
+          <label for="userAddress">Endereço de partida</label>
+          <input pInputText #userInput id="userInput" name="userInput" type="text" placeholder="Insira o endereço de partida" [(ngModel)]="userAddress" required/>
+          
+          <label for="fatecAddress">Endereço de chegada</label>
+          <input pInputText #fatecInput class="bg-black-alpha-10" type="text" [value]="fatecAddress" disabled/>
+
+        </div>
+        <p-button severity="danger" icon="pi pi-sort-alt" (click)="onSwapLocations($event)"></p-button>
+      </div>
+      
+      <label for="Data">Data</label>
+      <input pInputText type="date" [(ngModel)]="carData" placeholder="Data da Carona" required/>
+
+      <label for="hora">Hora</label>
+      <input pInputText type="time" [(ngModel)]="carHora" placeholder="Hora da Carona" required/>
+
+      <label for="vagas">Vagas no carro</label>
+      <p-inputNumber [(ngModel)]="carVagas"
+        placeholder="Vagas no carro"
+        [min]="1"
+        [max]="3"
+        [showButtons]="true"
+        buttonLayout="horizontal"
+        inputId="horizontal"
+        spinnerMode="horizontal"
+        decrementButtonClass="p-button-danger"
+        incrementButtonClass="p-button-success"
+        incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus">
+      </p-inputNumber>
+
+      <label for="valor">Valor</label>
+      <p-inputNumber [(ngModel)]="carValorDoacao" placeholder="Valor da corrida"
+        [min]="1"
+        [step]="0.25"
+        [showButtons]="true"
+        buttonLayout="horizontal"
+        inputId="horizontal"
+        spinnerMode="horizontal"
+        decrementButtonClass="p-button-danger"
+        incrementButtonClass="p-button-success"
+        incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus"
+        mode="currency"
+        currency="BRL">
+      </p-inputNumber>
+
+      <div class="flex justify-content-around">
+        <p-button severity="danger" label="Cancelar" (click)="hideDialog()"></p-button>
+        <p-button severity="success" label="Criar Carona" (click)="onCaronaCreated()"></p-button>
+      </div>
+    </div>
   </div>
-  <p-button severity="danger" icon="pi pi-sort-alt" (click)="onSwapLocations($event)"></p-button>
-  <p-button severity="danger" label="Solicitar Carona" (click)="onSolicitarCarona()"></p-button>
-</div>
+</p-dialog>
+
+<button class="posicao" severity="danger" pButton type="button" label="Criar Carona" icon="pi pi-plus" (click)="onSolicitarCarona()"></button>

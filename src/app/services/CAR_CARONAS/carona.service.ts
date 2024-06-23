@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Carona } from '../../modelo/Carona';
 import { Usuario } from '../../modelo/Usuario';
 import { UsuarioService } from '../USU_USUARIO/usuario.service';
+import { JsonPasCar } from '../../modelo/JsonPasCar';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,28 @@ export class CaronaService {
       // Por exemplo, você pode retornar um Observable vazio ou lançar um erro
       return new Observable<Carona[]>(observer => observer.complete());
     }
+  }
+
+  atualizarCarona( obj:Carona ):Observable<Carona> {
+    return this.http.put<Carona>(`${this.url}/atualizarCarona`, obj);
+  }
+
+  // Para passageiros
+  entrarNaCarona( obj:JsonPasCar ):void {
+    this.http.post<Carona>(`${this.url}/entrarNaCarona`, obj);
+  }
+
+  // sairDaCarona( obj:JsonPasCar ):void {
+  //   this.http.delete(`${this.url}/sairDaCarona`, obj);
+  // }
+
+  // Para a tela de todas as caronas solicitadas
+  getListaDeCaronasSolicitadas():Observable<Carona[]> {
+    return this.http.get<Carona[]>(`${this.url}/listaDeCaronasSolicitadas`);
+  }
+
+  // Para a tela de todas as caronas fornecidas
+  getListaDeCaronasFornecidas():Observable<Carona[]> {
+    return this.http.get<Carona[]>(`${this.url}/listaDeCaronasFornecidas`);
   }
 }

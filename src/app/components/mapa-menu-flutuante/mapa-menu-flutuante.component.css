@@ -1,9 +1,11 @@
-.menu-tamanho {
-    width: 50vw;
-    height: 170px;
+.posicao {
+    width: 40vw;
+    height: 7vh;
+    position: absolute;
+    left: 30vw;
+    bottom: 2vh;
 }
 
-.posicao {
-    left: 25vw;
-    bottom: 1vh;
+.pac-container {
+    z-index: 10000;
 }

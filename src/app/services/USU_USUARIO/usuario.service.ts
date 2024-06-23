@@ -22,6 +22,10 @@ export class UsuarioService {
     return this.http.post<Usuario>(`${this.url}/login`, obj);
   }
 
+  editarPerfil(obj: Usuario):Observable<Usuario>{
+    return this.http.put<Usuario>(`${this.url}/editarDadosDoPerfil`, obj);
+  }
+
   setCurrentUser(usuario: Usuario) {
     localStorage.setItem(this.localStorageKey, JSON.stringify(usuario));
   }

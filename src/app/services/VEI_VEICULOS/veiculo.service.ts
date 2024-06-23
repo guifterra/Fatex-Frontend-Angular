@@ -5,6 +5,7 @@ import { MotoristaVeiculo } from '../../modelo/MotoristaVeiculo';
 import { Usuario } from '../../modelo/Usuario';
 import { UsuarioService } from '../USU_USUARIO/usuario.service';
 import { Veiculo } from '../../modelo/Veiculo';
+import { JsonMotVei } from '../../modelo/JsonMotVei';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,18 @@ export class VeiculoService {
       // Por exemplo, você pode retornar um Observable vazio ou lançar um erro
       return new Observable<Veiculo[]>(observer => observer.complete());
     }
+  }
+
+  disableVehicle(vehicleId: number): Observable<Veiculo> {
+    const url = `${this.url}/alterarVisibilidadeDoMeuVeiculo/${vehicleId}`;
+    return this.http.put<Veiculo>(url, { status: 'INATIVO' });
+  }
+
+  editarVeiculo(obj:Veiculo):void {
+    this.http.put(`${this.url}/editarVeiculo`, obj);
+  }
+
+  alterarVisibilidadeDoVeiculo(obj:JsonMotVei):Observable<any> {
+    return this.http.put(`${this.url}/alterarVisibilidadeDoMeuVeiculo`, obj);
   }
 }

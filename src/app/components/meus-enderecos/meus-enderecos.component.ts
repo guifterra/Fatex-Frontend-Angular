@@ -36,7 +36,6 @@ export class MeusEnderecosComponent implements OnInit {
     private userService: UsuarioService,
     private enderecoService: EnderecoService,
     private messageService: MessageService,
-    private router: Router
   ) {}
 
   ngOnInit() {}

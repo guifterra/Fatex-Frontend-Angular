@@ -1,7 +1,6 @@
 import { Endereco } from "./Endereco";
 import { MotoristaVeiculo } from "./MotoristaVeiculo";
 
-
 export class Carona {
   carId: number = 0;
   carData: Date | null = null;
@@ -9,6 +8,8 @@ export class Carona {
   carPartida: Endereco = new Endereco();
   carChegada: Endereco = new Endereco();
   carValorDoacao: number = 0;
-  carStatus: 'AGENDADA' | 'EM_ANDAMENTO' | 'CANCELADA' | 'CONCLUIDA' | null = null;
+  carStatus: 'Agendada' | 'Em_andamento' | 'Cancelada' | 'Concluida' | null = null;
   motoristaVeiculo: MotoristaVeiculo = new MotoristaVeiculo();
+  carVagas: number = 0;
+  carValorMinimo: number = 0;
 }
