@@ -1,0 +1,38 @@
+<google-map
+  class=""
+  width="100vw"
+  height="100vh"
+  [options]="options"
+  [center]="center"
+>
+  <!-- Loop through caronas and display markers -->
+  <map-marker
+    *ngFor="let carona of caronas"
+    [options]="carMarkerOptions(carona)"
+    (click)="onCaronaMarkerClick(carona)"
+  >
+  </map-marker>
+</google-map>
+
+<!-- Dialog to display carona details -->
+<p-dialog header="Detalhes da carona" [(visible)]="displayDialog" [modal]="true" [responsive]="true" (onHide)="onCloseDialog()">
+  <ng-container *ngIf="selectedCarona">
+    <!-- Display carona details here -->
+    <p>ID: {{ selectedCarona.carId }}</p>
+    <p>Data: {{ selectedCarona.carData | date:'yyyy-MM-dd' }}</p>
+    <p>Hora: {{ selectedCarona.carHora }}</p>
+    <p>Endereço de Partida: {{ selectedCarona.carPartida.endRua }}, {{ selectedCarona.carPartida.endNumero }}, {{ selectedCarona.carPartida.endCidade }}</p>
+    <p>Endereço de Destino: {{ selectedCarona.carChegada.endRua }}, {{ selectedCarona.carChegada.endNumero }}, {{ selectedCarona.carChegada.endCidade }}</p>
+    <p>Valor da Doação: {{ selectedCarona.carValorDoacao | currency:'BRL':'symbol':'1.2-2' }}</p>
+    <p>Status: {{ selectedCarona.carStatus }}</p>
+    <p>Motorista: {{ selectedCarona.motoristaVeiculo.motorista.usuario.usuNome }}</p>
+    <p>Veículo: {{ selectedCarona.motoristaVeiculo.veiculo.marca.marNome }} {{ selectedCarona.motoristaVeiculo.veiculo.modelo.modNome }}</p>
+    <p>Placa do Veículo: {{ selectedCarona.motoristaVeiculo.veiculo.veiPlaca }}</p>
+    <p>Assentos Disponíveis: {{ selectedCarona.carVagas }}</p>
+    <div class="flex justify-content-between">
+      <button pButton type="button" severity="danger" label="Fechar" (click)="onCloseDialog()"></button>
+      <button pButton type="button" severity="success" label="Ingressar" (click)="ingressarNaCarona(selectedCarona)"></button>
+    </div>
+  </ng-container>
+</p-dialog>
+<p-toast />

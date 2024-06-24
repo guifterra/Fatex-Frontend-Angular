@@ -6,7 +6,6 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { PlaceSearchResult } from '../../modelo/PlaceSearchResult';
 import { PlaceService } from '../../services/place-service.service';
 import { Carona } from '../../modelo/Carona';
-import { JsonUsuEnd } from '../../modelo/JsonUsuEnd';
 import { Veiculo } from '../../modelo/Veiculo';
 import { Motorista } from '../../modelo/Motorista';
 import { MotoristaVeiculo } from '../../modelo/MotoristaVeiculo';
@@ -17,13 +16,17 @@ import { Dialog, DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CaronaService } from '../../services/CAR_CARONAS/carona.service';
 import { UsuarioService } from '../../services/USU_USUARIO/usuario.service';
-import { Usuario } from '../../modelo/Usuario';
 import { Endereco } from '../../modelo/Endereco'; // Ensure Endereco is imported
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-mapa-menu-flutuante',
   standalone: true,
-  imports: [InputTextModule, FormsModule, ButtonModule, GoogleMapsModule, DialogModule, InputNumberModule],
+  imports: [InputTextModule, FormsModule, ButtonModule, GoogleMapsModule, DialogModule, InputNumberModule, DropdownModule, CalendarModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './mapa-menu-flutuante.component.html',
   styleUrls: ['./mapa-menu-flutuante.component.css']
 })
@@ -32,21 +35,24 @@ export class MapaMenuFlutuanteComponent implements OnInit, AfterViewInit {
   @ViewChild('userInput') userInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fatecInput') fatecInput!: ElementRef<HTMLInputElement>;
 
-  @Output() placeChanged: EventEmitter<PlaceSearchResult> = new EventEmitter<PlaceSearchResult>();
+  @Output() placeChanged: EventEmitter<Endereco> = new EventEmitter<Endereco>();
   @Output() swapLocations = new EventEmitter<void>();
   @Output() caronaCreated: EventEmitter<Carona> = new EventEmitter<Carona>();
 
   displayDialog: boolean = false;
-  autocomplete!: google.maps.places.Autocomplete;
 
   userAddress: string = '';
   fatecAddress: string = 'FATEC Guaratinguetá - Prof. João Mod - Avenida Professor João Rodrigues - Jardim Esperanca, Guaratinguetá - SP, Brasil';
 
-  userInputResult: PlaceSearchResult | null = null;
-  fatecResult: PlaceSearchResult = {
-    address: this.fatecAddress,
-    name: 'FATEC Guaratinguetá - Prof. João Mod',
-    location: new google.maps.LatLng(-22.78594308939862, -45.18143080306932),
+  userInputEndereco: Endereco | null = null;
+  fatecEndereco: Endereco = {
+    endId: 0,
+    endRua: 'FATEC Guaratinguetá - Prof. João Mod',
+    endBairro: 'Jardim Esperanca',
+    endCidade: 'Guaratinguetá',
+    endLatitude: -22.78594308939862,
+    endLongitude: -45.18143080306932,
+    endNumero: 1501
   };
 
   carData: Date | null = null;
@@ -54,7 +60,16 @@ export class MapaMenuFlutuanteComponent implements OnInit, AfterViewInit {
   carValorDoacao: number = 1;
   carVagas: number = 1;
 
+  
+
   currentMotorista: Motorista | null = null; // Hold the currently logged-in Motorista
+  motoristaEstatisticas: any = null; // Variable to hold motorista statistics
+  selectedVeiculo: Veiculo | null = null; // Variable to hold the selected vehicle
+  veiculos: Veiculo[] = []; // List of vehicles
+  enderecos: Endereco[] = []; // List of addresses
+
+  minDate: Date | undefined;
+  maxDate: Date | undefined;
 
   constructor(
     private ngZone: NgZone,
@@ -63,66 +78,63 @@ export class MapaMenuFlutuanteComponent implements OnInit, AfterViewInit {
     private veiculoService: VeiculoService,
     private caronaService: CaronaService,
     private enderecoService: EnderecoService,
-    private usuarioService: UsuarioService // Inject UsuarioService for current user
+    private usuarioService: UsuarioService, // Inject UsuarioService for current user
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
-    // Fetch the current logged-in user's Motorista details
-    const currentUser = this.usuarioService.getCurrentUser();
-    if (currentUser) {
-      this.motoristaService.getMotoristaById(currentUser.usuId).subscribe(
-        (motorista) => {
-          this.currentMotorista = motorista;
-          console.log('Current Motorista:', this.currentMotorista);
-        },
-        (error) => {
-          console.error('Error fetching Motorista:', error);
-        }
-      );
-    } else {
-      console.warn('No current user logged in.');
-    }
+    this.getMotoristaEstatisticas();
+    this.loadVeiculos();
+    this.loadEnderecos(); // Load addresses
+
+    // const today = new Date();
+    const nextMonth = new Date();
+    // nextMonth.setMonth(today.getMonth() + 1); // Set max date to 1 month from today
+
+    // this.minDate = today;
+    this.maxDate = nextMonth;
   }
 
-  ngAfterViewInit() {
-    const center = { lat: -22.78594308939862, lng: -45.18143080306932 };
+  ngAfterViewInit() {}
 
-    const defaultBounds = {
-      north: center.lat + 0.2,
-      south: center.lat - 0.2,
-      east: center.lng + 0.2,
-      west: center.lng - 0.2,
-    };
+  getMotoristaEstatisticas() {
+    this.motoristaService.getEstatisticasDeMotorista().subscribe(
+      (motorista) => {
+        this.currentMotorista = motorista;
+        console.log('Current Motorista statistics:', this.currentMotorista);
+      },
+      (error) => {
+        console.error('Error fetching motorista statistics:', error);
+      }
+    );
+  }
+  
 
-    const options = {
-      bounds: defaultBounds,
-      componentRestrictions: { country: 'br' },
-      fields: ['address_components', 'geometry', 'name'],
-      strictBounds: false,
-    };
-
-    this.autocomplete = new google.maps.places.Autocomplete(this.userInput.nativeElement, options);
-
-    this.autocomplete.addListener('place_changed', () => {
-      this.ngZone.run(() => {
-        const place = this.autocomplete.getPlace();
-
-        if (place.geometry) {
-          const placeResult: PlaceSearchResult = {
-            address: this.userInput.nativeElement.value,
-            name: place.name || '',
-            location: place.geometry.location || undefined,
-          };
-
-          this.userAddress = placeResult.address;
-          console.log('User Input Location:', placeResult);
-          this.placeService.emitPlaceChange(placeResult);
-          this.placeChanged.emit(placeResult);
-        } else {
-          console.warn('No geometry found for the selected place.');
+  loadVeiculos() {
+    this.veiculoService.getVeiculosDoUsuario().subscribe(
+      (veiculos) => {
+        this.veiculos = veiculos;
+        if (veiculos.length > 0) {
+          this.selectedVeiculo = veiculos[0]; // Assuming the first vehicle is selected by default
         }
-      });
-    });
+        console.log('Loaded Veiculos:', veiculos);
+      },
+      (error) => {
+        console.error('Error loading vehicles:', error);
+      }
+    );
+  }
+
+  loadEnderecos() {
+    this.enderecoService.getEnderecosDoUsuario().subscribe(
+      (enderecos) => {
+        this.enderecos = enderecos;
+        console.log('Loaded Enderecos:', enderecos);
+      },
+      (error) => {
+        console.error('Error loading addresses:', error);
+      }
+    );
   }
 
   onSwapLocations(event: Event) {
@@ -145,6 +157,19 @@ export class MapaMenuFlutuanteComponent implements OnInit, AfterViewInit {
     this.fatecInput.nativeElement.disabled = !this.fatecInput.nativeElement.disabled;
   }
 
+  onEnderecoSelected(endereco: Endereco) {
+    if (endereco.endLatitude !== null && endereco.endLongitude !== null) {
+      this.userInputEndereco = endereco;
+      this.userAddress = endereco.endRua;
+      console.log('Selected Endereco:', endereco);
+      this.placeService.emitPlaceChange(endereco);
+      this.placeChanged.emit(endereco);
+    } else {
+      console.error('Endereco has null latitude or longitude:', endereco);
+      // Handle the case when latitude or longitude is null (e.g., show an error message)
+    }
+  }
+
   onSolicitarCarona() {
     this.displayDialog = true;
   }
@@ -153,56 +178,52 @@ export class MapaMenuFlutuanteComponent implements OnInit, AfterViewInit {
     this.displayDialog = false;
   }
 
+  isButtonDisabled(): boolean {
+    // Check if any required field is empty or null
+    return !this.carData || !this.carHora || !this.carValorDoacao || !this.carVagas;
+  }
+
   onCaronaCreated() {
     if (!this.currentMotorista) {
       console.error('Current Motorista not available.');
       return;
     }
 
+    if (!this.selectedVeiculo) {
+      console.error('No vehicle selected.');
+      return;
+    }
+
+    if (!this.userInputEndereco) {
+      console.error('User address is not selected.');
+      return;
+    }
+
     const motoristaVeiculo = new MotoristaVeiculo();
     motoristaVeiculo.motorista = this.currentMotorista;
+    motoristaVeiculo.veiculo = this.selectedVeiculo;
 
-    const userInputResult: PlaceSearchResult = this.userInputResult || {
-      address: this.userAddress,
-      name: '',
-      location: undefined,
-    };
-
-    const fatecResult: PlaceSearchResult = this.fatecResult;
-
-    const userLocation = userInputResult.location ? {
-      lat: userInputResult.location.lat(),
-      lng: userInputResult.location.lng()
-    } : { lat: 0, lng: 0 };
-
-    const fatecLocation = fatecResult.location ? {
-      lat: fatecResult.location.lat(),
-      lng: fatecResult.location.lng()
-    } : { lat: -22.78594308939862, lng: -45.18143080306932 };
-
-    // Prepare Endereco objects for carPartida and carChegada
     const carPartida: Endereco = {
       endId: 0,
-      endRua: userInputResult.address,
-      endLatitude: userLocation.lat,
-      endLongitude: userLocation.lng,
-      endBairro: '',
-      endCidade: '',
-      endNumero: 0,
+      endRua: this.userInputEndereco.endRua,
+      endLatitude: this.userInputEndereco.endLatitude,
+      endLongitude: this.userInputEndereco.endLongitude,
+      endBairro: this.userInputEndereco.endBairro,
+      endCidade: this.userInputEndereco.endCidade,
+      endNumero: this.userInputEndereco.endNumero,
     };
-
+  
     const carChegada: Endereco = {
       endId: 0,
-      endRua: fatecResult.address,
-      endLatitude: fatecLocation.lat,
-      endLongitude: fatecLocation.lng,
-      endBairro: '',
-      endCidade: '',
-      endNumero: 0,
+      endRua: this.fatecEndereco.endRua,
+      endLatitude: this.fatecEndereco.endLatitude,
+      endLongitude: this.fatecEndereco.endLongitude,
+      endBairro: this.fatecEndereco.endBairro,
+      endCidade: this.fatecEndereco.endCidade,
+      endNumero: this.fatecEndereco.endNumero,
     };
 
-    // Create Carona object with saved Endereco objects
-    const carona: Carona = {
+    const novaCarona: Carona = {
       carId: 0,
       carData: this.carData,
       carHora: this.carHora,
@@ -212,26 +233,28 @@ export class MapaMenuFlutuanteComponent implements OnInit, AfterViewInit {
       carStatus: 'Agendada',
       motoristaVeiculo: motoristaVeiculo,
       carVagas: this.carVagas,
-      carValorMinimo: 0,
+      carValorMinimo: 0
     };
 
-    // Call caronaService to create carona
-    this.caronaService.cadastrarCarona(carona).subscribe(
+    console.log('Carona data:', JSON.stringify(novaCarona, null, 2));
+
+    this.caronaService.cadastrarCarona(novaCarona).subscribe(
       (response) => {
-        console.log('Carona cadastrada:', response);
+        this.messageService.add({ severity: 'success', summary: 'Successo', detail: 'Carona criada com sucesso!' });
+        console.log('Carona created successfully:', response);
         this.caronaCreated.emit(response);
-        // Handle success response as needed
+        this.hideDialog();
       },
       (error) => {
-        console.error('Erro ao cadastrar carona:', error);
-        // Handle error as needed
+        this.messageService.add({ severity: 'danger', summary: 'Erro', detail: 'Erro ao criar a carona' });
+        console.error('Error creating Carona:', error);
+        if (error.error instanceof SyntaxError) {
+          console.error('Syntax error:', error.error.message);
+        } else {
+          console.error('Unexpected error:', error);
+        }
       }
     );
-
-    this.hideDialog();
-  }
-
-  isFormValid(): boolean {
-    return !!this.userAddress && !!this.carData && !!this.carHora && this.carVagas >= 1 && this.carValorDoacao >= 1;
   }
 }
+

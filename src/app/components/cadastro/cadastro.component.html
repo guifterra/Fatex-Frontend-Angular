@@ -1,46 +1,118 @@
 <!-- cadastro.component.html -->
-<div class="min-h-screen background-fatex flex justify-content-center align-items-center py-5 border-box">
-  <div class="w-30rem w-responsive bg-m-white border-solid border-600 border-round-xl flex">
+<div
+  class="min-h-screen background-fatex flex justify-content-center align-items-center py-5 border-box"
+>
+  <div
+    class="w-30rem w-responsive bg-m-white border-solid border-600 border-round-xl flex"
+  >
     <div class="w-30rem">
       <div class="flex w-full align-items-center py-3 justify-content-center">
-        <img class="w-7rem h-7rem -ml-5" src="../../../assets/Logo.png" alt="Logo FATEX" />
+        <img
+          class="w-7rem h-7rem -ml-5"
+          src="../../../assets/Logo.png"
+          alt="Logo FATEX"
+        />
         <span class="font-semibold text-6xl color-m-red">FATEX</span>
       </div>
       <div class="px-5">
         <form [formGroup]="formGroup" (ngSubmit)="cadastrar()">
           <div class="card flex justify-content-center flex-column mb-5">
             <span class="p-float-label">
-              <input formControlName="usuEmail" class="input-default" type="email" pInputText pTooltip="Digite seu Email"
-                tooltipPosition="bottom" id="usuEmail" name="usuEmail" />
+              <input
+                formControlName="usuEmail"
+                class="input-default"
+                type="email"
+                pInputText
+                pTooltip="Digite seu Email"
+                tooltipPosition="bottom"
+                id="usuEmail"
+                name="usuEmail"
+              />
               <label for="usuEmail">Email Institucional</label>
             </span>
-            <div *ngIf="formGroup.get('usuEmail')?.touched && formGroup.get('usuEmail')?.invalid" class="text-red-500 text-sm">
-              {{ getErrorMessage('usuEmail') }}
+            <div
+              *ngIf="
+                formGroup.get('usuEmail')?.touched &&
+                formGroup.get('usuEmail')?.invalid
+              "
+              class="text-red-500 text-sm"
+            >
+              {{ getErrorMessage("usuEmail") }}
             </div>
           </div>
           <div class="card flex justify-content-center flex-column mb-5">
             <span class="p-float-label">
-              <input formControlName="usuNome" class="input-default" type="text" pInputText pTooltip="Digite seu Nome"
-                tooltipPosition="bottom" id="usuNome" name="usuNome" />
+              <input
+                formControlName="usuNome"
+                class="input-default"
+                type="text"
+                pInputText
+                pTooltip="Digite seu Nome"
+                tooltipPosition="bottom"
+                id="usuNome"
+                name="usuNome"
+              />
               <label for="usuNome">Nome Completo</label>
             </span>
-            <div *ngIf="formGroup.get('usuNome')?.touched && formGroup.get('usuNome')?.invalid" class="text-red-500">
-              {{ getErrorMessage('usuNome') }}
+            <div
+              *ngIf="
+                formGroup.get('usuNome')?.touched &&
+                formGroup.get('usuNome')?.invalid
+              "
+              class="text-red-500"
+            >
+              {{ getErrorMessage("usuNome") }}
             </div>
           </div>
           <div class="card flex justify-content-center flex-column mb-5">
             <span class="p-float-label">
-              <p-inputMask mask="999.999.999-99" formControlName="usuCpf" class="input-default"></p-inputMask>
+              <p-inputMask
+                mask="(99)999999999"
+                formControlName="usuTelefone"
+                class="input-default"
+              ></p-inputMask>
+              <label for="usuTelefone">Telefone</label>
+            </span>
+            <div
+              *ngIf="
+                formGroup.get('usuTelefone')?.touched &&
+                formGroup.get('usuTelefone')?.invalid
+              "
+              class="text-red-500"
+            >
+              {{ getErrorMessage("usuTelefone") }}
+            </div>
+          </div>
+          <div class="card flex justify-content-center flex-column mb-5">
+            <span class="p-float-label">
+              <p-inputMask
+                mask="999.999.999-99"
+                formControlName="usuCpf"
+                class="input-default"
+              ></p-inputMask>
               <label for="usuCpf">CPF</label>
             </span>
-            <div *ngIf="formGroup.get('usuCpf')?.touched && formGroup.get('usuCpf')?.invalid" class="text-red-500">
-              {{ getErrorMessage('usuCpf') }}
+            <div
+              *ngIf="
+                formGroup.get('usuCpf')?.touched &&
+                formGroup.get('usuCpf')?.invalid
+              "
+              class="text-red-500"
+            >
+              {{ getErrorMessage("usuCpf") }}
             </div>
           </div>
           <div class="card flex justify-content-center flex-column mb-5">
             <span class="p-float-label">
-              <p-password formControlName="usuSenha" id="usuSenha" name="usuSenha" class="input-default"
-                pTooltip="Digite sua Senha" tooltipPosition="bottom" p-password-info="Insira sua senha">
+              <p-password
+                formControlName="usuSenha"
+                id="usuSenha"
+                name="usuSenha"
+                class="input-default"
+                pTooltip="Digite sua Senha"
+                tooltipPosition="bottom"
+                p-password-info="Insira sua senha"
+              >
                 <ng-template pTemplate="header">
                   <h4>Escolha uma senha</h4>
                 </ng-template>
@@ -57,20 +129,42 @@
               </p-password>
               <label for="usuCpf">Senha</label>
             </span>
-            <div *ngIf="formGroup.get('usuSenha')?.touched && formGroup.get('usuSenha')?.invalid" class="text-red-500">
-              {{ getErrorMessage('usuSenha') }}
+            <div
+              *ngIf="
+                formGroup.get('usuSenha')?.touched &&
+                formGroup.get('usuSenha')?.invalid
+              "
+              class="text-red-500"
+            >
+              {{ getErrorMessage("usuSenha") }}
             </div>
           </div>
           <div class="card flex justify-content-center flex-column mb-5">
             <span class="p-float-label">
-              <input formControlName="confSenha" class="input-default" type="password" pInputText
-                pTooltip="Repita a sua Senha" tooltipPosition="bottom" id="conf-pswd" />
+              <input
+                formControlName="confSenha"
+                class="input-default"
+                type="password"
+                pInputText
+                pTooltip="Repita a sua Senha"
+                tooltipPosition="bottom"
+                id="conf-pswd"
+              />
               <label for="conf-pswd">Confirme a sua senha</label>
             </span>
-            <div *ngIf="formGroup.get('confSenha')?.touched && formGroup.get('confSenha')?.invalid" class="text-red-500">
-              {{ getErrorMessage('confSenha') }}
+            <div
+              *ngIf="
+                formGroup.get('confSenha')?.touched &&
+                formGroup.get('confSenha')?.invalid
+              "
+              class="text-red-500"
+            >
+              {{ getErrorMessage("confSenha") }}
             </div>
-            <div *ngIf="formGroup.hasError('passwordsNotMatch')" class="text-red-500">
+            <div
+              *ngIf="formGroup.hasError('passwordsNotMatch')"
+              class="text-red-500"
+            >
               As senhas não são iguais.
             </div>
           </div>
@@ -97,24 +191,41 @@
               <label for="tipoDeConta">Tipo de Conta</label>
             </span>
 
-            <div *ngIf="formGroup.get('tipoDeConta')?.touched && formGroup.get('tipoDeConta')?.invalid" class="text-red-500">
-              {{ getErrorMessage('tipoDeConta') }}
+            <div
+              *ngIf="
+                formGroup.get('tipoDeConta')?.touched &&
+                formGroup.get('tipoDeConta')?.invalid
+              "
+              class="text-red-500"
+            >
+              {{ getErrorMessage("tipoDeConta") }}
             </div>
           </div>
 
           <div class="flex flex-column justify-content-center">
-            <span class="color-m-gray3 text-center mb-5">Já possui uma conta?
-              <a class="color-m-gray3" routerLink=""><span class="underline">Realize o Login!</span></a>
+            <span class="color-m-gray3 text-center mb-5"
+              >Já possui uma conta?
+              <a class="color-m-gray3" routerLink=""
+                ><span class="underline">Realize o Login!</span></a
+              >
             </span>
-            <p-button class="w-full px-5" severity="danger" label="Cadastrar-se" styleClass="min-w-full"
-              [disabled]="formGroup.invalid" (click)="cadastrar()"></p-button>
+            <p-button
+              class="w-full px-5"
+              severity="danger"
+              label="Cadastrar-se"
+              styleClass="min-w-full"
+              [disabled]="formGroup.invalid"
+              (click)="cadastrar()"
+            ></p-button>
           </div>
         </form>
         <div class="flex justify-content-center">
           <p-toast></p-toast>
           <p class="color-m-gray3 text-center">
             Ao clicar em Cadastrar-se você está concordando com os
-            <span (click)="showDialog()" class="underline cursor-pointer">Termos de Uso</span>
+            <span (click)="showDialog()" class="underline cursor-pointer"
+              >Termos de Uso</span
+            >
             do FATEX.
           </p>
         </div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PlaceSearchResult } from '../modelo/PlaceSearchResult';
+import { Endereco } from '../modelo/Endereco';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +13,24 @@ export class PlaceService {
 
   constructor(private http: HttpClient) {}
 
-  emitPlaceChange(place: PlaceSearchResult): Observable<PlaceSearchResult> {
+  emitPlaceChange(endereco: Endereco): Observable<PlaceSearchResult> {
+    if (endereco.endLatitude === null || endereco.endLongitude === null) {
+      throw new Error('Endereco latitude and longitude cannot be null');
+    }
+
+    const placeResult: PlaceSearchResult = {
+      address: endereco.endRua,
+      name: '',
+      location: new google.maps.LatLng(endereco.endLatitude, endereco.endLongitude)
+    };
+
     return new Observable(observer => {
-      observer.next(place);
+      observer.next(placeResult);
       observer.complete();
     });
   }
 
-  sendPlaceToBackend(place: PlaceSearchResult): Observable<PlaceSearchResult> {
-    return this.http.post<PlaceSearchResult>(`${this.url}/caronaPontos`, place);
+  sendPlaceToBackend(endereco: Endereco): Observable<Endereco> {
+    return this.http.post<Endereco>(`${this.url}/caronaPontos`, endereco);
   }
 }

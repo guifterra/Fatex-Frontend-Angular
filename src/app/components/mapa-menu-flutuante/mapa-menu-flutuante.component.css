@@ -9,3 +9,15 @@
 .pac-container {
     z-index: 10000;
 }
+
+:host ::ng-deep .p-datepicker {
+    transform: scale(0.7); /* Adjust the scale to your desired value */
+}
+
+:host ::ng-deep .p-calendar {
+    width: 100%;
+}
+
+:host ::ng-deep .p-dropdown {
+    width: 100%;
+}

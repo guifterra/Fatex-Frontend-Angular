@@ -6,13 +6,13 @@ import { ConfiguracoesComponent } from './components/configuracoes/configuracoes
 import { DoacaoComponent } from './components/doacao/doacao.component';
 import { HistoricoComponent } from './components/historico/historico.component';
 import { LoginComponent } from './components/login/login.component';
-import { OferecerCaronaComponent } from './components/oferecer-carona/oferecer-carona.component';
 import { PedirCaronaComponent } from './components/pedir-carona/pedir-carona.component';
 import { SuporteComponent } from './components/suporte/suporte.component';
 import { SistemaComponent } from './components/sistema/sistema.component';
 import { MeusVeiculosComponent } from './components/meus-veiculos/meus-veiculos.component';
 import { MeusEnderecosComponent } from './components/meus-enderecos/meus-enderecos.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { VisualizarCaronasComponent } from './components/visualizar-caronas/visualizar-caronas.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -26,7 +26,7 @@ export const routes: Routes = [
       { path: 'chat', component: ChatComponent },
       { path: 'configuracoes', component: ConfiguracoesComponent },
       { path: 'doacao', component: DoacaoComponent },
-      { path: 'oferecer', component: OferecerCaronaComponent },
+      { path: 'visualizar', component: VisualizarCaronasComponent },
       { path: 'suporte', component: SuporteComponent },
       { path: 'meusVeiculos', component: MeusVeiculosComponent },
       { path: 'meusEnderecos', component: MeusEnderecosComponent },

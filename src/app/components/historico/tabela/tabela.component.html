@@ -3,14 +3,15 @@
     <p-table [value]="caronas" [tableStyle]="{'min-width': '60rem'}">
       <ng-template pTemplate="header">
           <tr>
-              <th pSortableColumn="id" style="width:6%">ID<p-sortIcon field="code"></p-sortIcon></th>
-              <th pSortableColumn="data" style="width:10%">Data<p-sortIcon field="code"></p-sortIcon></th>
-              <th pSortableColumn="hora" style="width:8%">Hora<p-sortIcon field="code"></p-sortIcon></th>
-              <th pSortableColumn="pontoPartida" style="width:15.5%">Partida<p-sortIcon field="code"></p-sortIcon></th>
-              <th pSortableColumn="pontoChegada" style="width:15.5%">Chegada<p-sortIcon field="code"></p-sortIcon></th>
-              <th style="width:12.5%">Doação</th>
-              <th style="width:12.5%">Status</th>
-              <!-- <th style="width:6%">Mais</th> -->
+              <th pSortableColumn="id" style="width:5%">ID</th>
+              <th pSortableColumn="data" style="width:10%">Data</th>
+              <th pSortableColumn="hora" style="width:5%">Hora</th>
+              <th pSortableColumn="pontoPartida" style="width:15%">Partida</th>
+              <th pSortableColumn="pontoChegada" style="width:15%">Chegada</th>
+              <th pSortableColumn="nomeMotorista" style="width:7.5%">Nome do motorista</th>
+              <th pSortableColumn="telefone" style="width:7.5%">Telefone</th>
+              <th style="width:7.5%">Doação</th>
+              <th style="width:7.5%">Status</th>
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-caronas>
@@ -20,17 +21,10 @@
               <td>{{caronas.carHora}}</td>
               <td>{{caronas.carPartida.endNumero}}, {{caronas.carPartida.endRua}}, {{caronas.carPartida.endBairro}}, {{caronas.carPartida.endCidade}}</td>
               <td>{{caronas.carChegada.endNumero}}, {{caronas.carChegada.endRua}}, {{caronas.carChegada.endBairro}}, {{caronas.carChegada.endCidade}}</td>
+              <td>{{caronas.motoristaVeiculo.motorista.usuario.usuNome}}</td>
+              <td>{{caronas.motoristaVeiculo.motorista.usuario.usuTelefone}}</td>
               <td>R$ {{caronas.carValorDoacao}}</td>
               <td>{{caronas.carStatus}}</td>
-              <!-- <td>
-                <div class="card flex justify-content-center">
-                  <p-sidebar [(visible)]="sidebarVisible" [fullScreen]="true">
-                    <h3>INFORMAÇÕES GERAIS DA CARONA: </h3>
-                    <p>ID da carona: {{caronas.carId}}</p>
-                  </p-sidebar>
-                  <p-button (click)="sidebarVisible = true" icon="pi pi-th-large color-m-white" severity="danger"></p-button>
-                </div>
-              </td> -->
           </tr>
       </ng-template>
   </p-table>

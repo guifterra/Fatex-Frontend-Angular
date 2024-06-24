@@ -7,6 +7,10 @@
   width: 425px;
 }
 
+:host ::ng-deep .p-inputmask {
+  width: 425px;
+}
+
 .btn-ajust{
   margin: 0 auto;
 }
@@ -25,4 +29,10 @@ form{
   :host ::ng-deep .p-dropdown {
     width: 250px;
   }
+
+  :host ::ng-deep .p-inputmask {
+    width: 250px;
+  }
 }
+
+

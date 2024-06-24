@@ -1,27 +1,81 @@
-<p-dialog header="Criar Carona" [(visible)]="displayDialog" [modal]="true" [style]="{ 'max-width': '700px' }" [baseZIndex]="10000" [dismissableMask]="true">
+<p-dialog
+  header="Criar Carona"
+  [(visible)]="displayDialog"
+  [modal]="true"
+  [style]="{ 'max-width': '700px' }"
+  [baseZIndex]="10000"
+  [dismissableMask]="true"
+>
   <div class="">
     <div class="flex flex-column justify-content-around gap-3">
       <div class="flex align-items-center gap-4">
         <div class="flex flex-column gap-2">
-
           <label for="userAddress">Endereço de partida</label>
-          <input pInputText #userInput id="userInput" name="userInput" type="text" placeholder="Insira o endereço de partida" [(ngModel)]="userAddress" required/>
-          
-          <label for="fatecAddress">Endereço de chegada</label>
-          <input pInputText #fatecInput class="bg-black-alpha-10" type="text" [value]="fatecAddress" disabled/>
+          <p-dropdown
+            [options]="enderecos"
+            optionLabel="endRua"
+            placeholder="Selecione um endereço"
+            (onChange)="onEnderecoSelected($event.value)"
+          >
+          <ng-template let-endereco pTemplate="item">
+            {{ endereco.endRua }}, {{ endereco.endNumero }}
+          </ng-template>
+          </p-dropdown>
 
+          <label for="fatecAddress">Endereço de chegada</label>
+          <input
+            pInputText
+            #fatecInput
+            class="bg-black-alpha-10"
+            type="text"
+            [value]="fatecAddress"
+            disabled
+          />
         </div>
-        <p-button severity="danger" icon="pi pi-sort-alt" (click)="onSwapLocations($event)"></p-button>
+        <p-button
+          severity="danger"
+          icon="pi pi-sort-alt"
+          (click)="onSwapLocations($event)"
+        ></p-button>
       </div>
-      
+
+      <label for="selecioneVeiculo">Selecione o veículo</label>
+      <p-dropdown
+        [options]="veiculos"
+        optionLabel="veiPlaca"
+        [(ngModel)]="selectedVeiculo"
+        id="veiculo"
+        name="veiculo"
+      ></p-dropdown>
+
       <label for="Data">Data</label>
-      <input pInputText type="date" [(ngModel)]="carData" placeholder="Data da Carona" required/>
+
+      <div class="flex-auto">
+        <p-calendar
+          [(ngModel)]="carData"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          [disabledDays]="[6]"
+          dateFormat="dd/mm/yy"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          required
+          inputId="icondisplay"
+        />
+      </div>
 
       <label for="hora">Hora</label>
-      <input pInputText type="time" [(ngModel)]="carHora" placeholder="Hora da Carona" required/>
+      <input
+        pInputText
+        type="time"
+        [(ngModel)]="carHora"
+        placeholder="Hora da Carona"
+        required
+      />
 
       <label for="vagas">Vagas no carro</label>
-      <p-inputNumber [(ngModel)]="carVagas"
+      <p-inputNumber
+        [(ngModel)]="carVagas"
         placeholder="Vagas no carro"
         [min]="1"
         [max]="3"
@@ -32,11 +86,14 @@
         decrementButtonClass="p-button-danger"
         incrementButtonClass="p-button-success"
         incrementButtonIcon="pi pi-plus"
-        decrementButtonIcon="pi pi-minus">
+        decrementButtonIcon="pi pi-minus"
+      >
       </p-inputNumber>
 
       <label for="valor">Valor</label>
-      <p-inputNumber [(ngModel)]="carValorDoacao" placeholder="Valor da corrida"
+      <p-inputNumber
+        [(ngModel)]="carValorDoacao"
+        placeholder="Valor da corrida"
         [min]="1"
         [step]="0.25"
         [showButtons]="true"
@@ -48,15 +105,34 @@
         incrementButtonIcon="pi pi-plus"
         decrementButtonIcon="pi pi-minus"
         mode="currency"
-        currency="BRL">
+        currency="BRL"
+      >
       </p-inputNumber>
 
       <div class="flex justify-content-around">
-        <p-button severity="danger" label="Cancelar" (click)="hideDialog()"></p-button>
-        <p-button severity="success" label="Criar Carona" (click)="onCaronaCreated()"></p-button>
+        <p-button
+          severity="danger"
+          label="Cancelar"
+          (click)="hideDialog()"
+        ></p-button>
+        <p-button
+          [disabled]="isButtonDisabled()"
+          severity="success"
+          label="Criar Carona"
+          (click)="onCaronaCreated()"
+        ></p-button>
       </div>
     </div>
   </div>
 </p-dialog>
 
-<button class="posicao" severity="danger" pButton type="button" label="Criar Carona" icon="pi pi-plus" (click)="onSolicitarCarona()"></button>
+<button
+  class="posicao"
+  severity="danger"
+  pButton
+  type="button"
+  label="Criar Carona"
+  icon="pi pi-plus"
+  (click)="onSolicitarCarona()"
+></button>
+<p-toast />

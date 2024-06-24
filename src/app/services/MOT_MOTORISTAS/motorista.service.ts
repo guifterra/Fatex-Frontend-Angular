@@ -14,11 +14,6 @@ export class MotoristaService {
 
   constructor(private http: HttpClient, private usuarioService: UsuarioService) {}
 
-  // Method to fetch Motorista details by usuId
-  getMotoristaById(usuId: number): Observable<Motorista> {
-    return this.http.get<Motorista>(`${this.url}/motoristas/${usuId}`);
-  }
-
   // Example method to fetch statistics for the logged-in Motorista
   getEstatisticasDeMotorista(): Observable<Motorista> {
     const currentUser: Usuario | null = this.usuarioService.getCurrentUser();

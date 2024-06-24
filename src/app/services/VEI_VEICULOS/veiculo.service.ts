@@ -34,16 +34,11 @@ export class VeiculoService {
     }
   }
 
-  disableVehicle(vehicleId: number): Observable<Veiculo> {
-    const url = `${this.url}/alterarVisibilidadeDoMeuVeiculo/${vehicleId}`;
-    return this.http.put<Veiculo>(url, { status: 'INATIVO' });
-  }
-
   editarVeiculo(obj:Veiculo):void {
     this.http.put(`${this.url}/editarVeiculo`, obj);
   }
 
-  alterarVisibilidadeDoVeiculo(obj:JsonMotVei):Observable<any> {
-    return this.http.put(`${this.url}/alterarVisibilidadeDoMeuVeiculo`, obj);
+  alterarVisibilidadeDoVeiculo(obj: JsonMotVei): Observable<any> {
+    return this.http.put<any>(`${this.url}/alterarVisibilidadeDoMeuVeiculo`, obj);
   }
 }

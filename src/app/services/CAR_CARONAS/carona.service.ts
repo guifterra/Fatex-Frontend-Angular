@@ -37,8 +37,8 @@ export class CaronaService {
   }
 
   // Para passageiros
-  entrarNaCarona( obj:JsonPasCar ):void {
-    this.http.post<Carona>(`${this.url}/entrarNaCarona`, obj);
+  entrarNaCarona(obj: JsonPasCar): Observable<any> {
+    return this.http.post<any>(`${this.url}/entrarNaCarona`, obj);
   }
 
   // sairDaCarona( obj:JsonPasCar ):void {

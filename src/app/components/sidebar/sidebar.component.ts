@@ -24,7 +24,7 @@ export class SidebarComponent {
   itensMenu: any = [
     { title: "MENU", btnValues: [
                                   { icone: "pi-flag-fill" , texto: "Criar Carona", rl: "/sistema" },
-                                  { icone: "pi-map" , texto: "Visualizar Caronas", rl: "oferecer" },
+                                  { icone: "pi-map" , texto: "Visualizar Caronas", rl: "visualizar" },
                                   //{ icone: "pi-comments" , texto: "Chat", rl: "chat" },
                                   { icone: "pi-history" , texto: "Histórico", rl: "historico" },
                                   //{ icone: "pi-map" , texto: "Mapa", rl: "mapa" }

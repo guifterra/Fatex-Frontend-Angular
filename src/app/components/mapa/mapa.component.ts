@@ -5,7 +5,7 @@ import {
   MapDirectionsService,
 } from '@angular/google-maps';
 import { MapaMenuFlutuanteComponent } from '../mapa-menu-flutuante/mapa-menu-flutuante.component';
-import { PlaceSearchResult } from '../../modelo/PlaceSearchResult';
+import { Endereco } from '../../modelo/Endereco';
 import { CommonModule } from '@angular/common';
 import { map } from 'rxjs/operators';
 
@@ -64,42 +64,38 @@ export class MapaComponent implements OnInit {
     
   }
 
-  onPlaceChanged(place: PlaceSearchResult) {
-    if (place.location) {
+  onPlaceChanged(endereco: Endereco) {
+    if (endereco.endLatitude !== null && endereco.endLongitude !== null) {
+      const location: google.maps.LatLngLiteral = {
+        lat: endereco.endLatitude,
+        lng: endereco.endLongitude,
+      };
+
       // Update the center of the map to the selected place
-      this.center = {
-        lat: place.location.lat(),
-        lng: place.location.lng(),
-      };
-  
+      this.center = location;
+
       // Update the position of the regular marker to the selected place
-      this.markerPosition = {
-        lat: place.location.lat(),
-        lng: place.location.lng(),
-      };
-  
+      this.markerPosition = location;
+
       // Update the position of the car marker to the selected place
-      this.carMarkerPosition = {
-        lat: place.location.lat(),
-        lng: place.location.lng(),
-      };
+      this.carMarkerPosition = location;
 
       // Center the map on the car marker's position
       this.map.googleMap?.setCenter(this.carMarkerPosition);
-  
+
       // Update the options for the car marker to reflect its new position
       this.carMarkerOptions = {
         ...this.carMarkerOptions,
         position: this.carMarkerPosition,
       };
-  
+
       // Get directions from the car marker's position to the fatec marker's position
       this.getDirections(this.carMarkerPosition, this.fatecMarkerPosition);
 
       // Set carMarkerVisible to true
       this.carMarkerVisible = true;
     }
-}
+  }
 
   getDirections(
     origin: google.maps.LatLngLiteral,

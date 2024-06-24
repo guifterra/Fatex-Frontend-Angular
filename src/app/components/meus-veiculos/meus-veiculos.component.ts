@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TabelaComponent } from './tabela/tabela.component';
 import { Veiculo } from '../../modelo/Veiculo';
 import { VeiculoService } from '../../services/VEI_VEICULOS/veiculo.service';
@@ -18,21 +18,22 @@ import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @Component({
   selector: 'app-meus-veiculos',
   standalone: true,
-  imports: [TabelaComponent, ToastModule, ButtonModule, InputTextModule, DialogModule, CommonModule, TooltipModule, FormsModule, DropdownModule],
+  imports: [TabelaComponent, ToastModule, ButtonModule, InputTextModule, DialogModule, CommonModule, TooltipModule, FormsModule, DropdownModule, InputMaskModule],
   templateUrl: './meus-veiculos.component.html',
   styleUrl: './meus-veiculos.component.css',
   providers: [MessageService],
 })
 export class MeusVeiculosComponent implements OnInit {
+  @Output() veiculoAdded: EventEmitter<void> = new EventEmitter<void>();
 
   veiculo = new Veiculo();
   marcas: Marca[] = [];
   modelos: Modelo[] = [];
-
   jsonMotVei: JsonMotVei = new JsonMotVei();
 
   constructor(
@@ -43,7 +44,7 @@ export class MeusVeiculosComponent implements OnInit {
     private modeloService: ModeloService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.marcaService.getMarcas().subscribe((data: Marca[]) => {
       this.marcas = data;
     });
@@ -54,36 +55,32 @@ export class MeusVeiculosComponent implements OnInit {
   }
 
   cadastrarVeiculo(): void {
-    console.log(this.veiculo);
-
     this.jsonMotVei.veiculo = this.veiculo;
 
+    console.log(this.veiculo)
+
     this.motoristaService.getEstatisticasDeMotorista().subscribe(
-      (motorista) => {
+      (motorista: Motorista) => {
         this.jsonMotVei.motorista = motorista ?? new Motorista();
 
         this.veiculoService.cadastrarVeiculo(this.jsonMotVei).subscribe(
-          (retorno) => {
-            // Limpar formulario
-            this.veiculo = new Veiculo();
-            this.jsonMotVei = new JsonMotVei();
-            // Mensagem de sucesso
+          (retorno: any) => {
+            this.veiculoAdded.emit(); // Emit event to notify parent component (assuming TabelaComponent is parent)
+            this.veiculo = new Veiculo(); // Clear form
+            this.jsonMotVei = new JsonMotVei(); // Clear jsonMotVei
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso no cadastro',
               detail: 'Seu cadastro de veículo foi realizado com sucesso!',
               life: 3000,
+              
             });
-
-            // Depois trocar pela emissao de um evento para tabela recargar o metodo de puxar os veiculos
             setTimeout(() => {
               window.location.reload();
             }, 1000);
           },
-          (error) => {
-            // Tratamento de erro
+          (error: any) => {
             console.error('Ocorreu um erro ao cadastrar o veículo:', error);
-            // Exibir alerta ao usuário
             this.messageService.add({
               severity: 'warn',
               summary: 'Erro inesperado',
@@ -93,7 +90,7 @@ export class MeusVeiculosComponent implements OnInit {
           }
         );
       },
-      (error) => {
+      (error: any) => {
         console.error('Erro ao obter estatísticas do motorista:', error);
         this.messageService.add({
           severity: 'warn',

@@ -78,6 +78,7 @@ export class CadastroComponent implements OnInit {
       usuSenha: ['', [Validators.required, Validators.minLength(6), this.passwordStrengthValidator]],
       confSenha: ['', [Validators.required]],
       tipoDeConta: ['', Validators.required],
+      usuTelefone: ['', Validators.required],
     }, { validator: this.passwordMatchValidator });
   }
 
@@ -142,6 +143,7 @@ export class CadastroComponent implements OnInit {
       this.usuario = this.formGroup.value;
       this.usuario.usuTipo = (this.formGroup.get('tipoDeConta')?.value).code;
       this.usuario.usuCpf = this.formGroup.value.usuCpf.replace(/[\.-]/g, '');
+      this.usuario.usuTelefone = this.formGroup.value.usuTelefone.replace(/\D/g, '');
       this.servico.cadastrar(this.usuario).subscribe(
         (retorno) => {
           this.formGroup.reset();
