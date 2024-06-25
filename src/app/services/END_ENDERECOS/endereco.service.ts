@@ -32,6 +32,17 @@ export class EnderecoService {
     }
   }
 
+  getEnderecosExcluidosDoUsuario(): Observable<Endereco[]> {
+    const currentUser = this.userService.getCurrentUser();
+    if(currentUser){
+      return this.http.post<Endereco[]>(`${this.url}/listaDeEnderecosExcluidos`, currentUser);
+    } else {
+      // Trate o caso em que não há usuário atualmente logado
+      // Por exemplo, você pode retornar um Observable vazio ou lançar um erro
+      return new Observable<Endereco[]>(observer => observer.complete());
+    }
+  }
+
   alterarVisibilidadeDoMeuEndereco( obj:JsonUsuEnd ): Observable<any> {
     return this.http.put<any>(`${this.url}/alterarVisibilidadeDoMeuEndereco`, obj);
   }
