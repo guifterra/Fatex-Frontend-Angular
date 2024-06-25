@@ -10,6 +10,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RippleModule } from 'primeng/ripple';
 import { Motorista } from '../../../modelo/Motorista';
 import { MotoristaService } from '../../../services/MOT_MOTORISTAS/motorista.service';
+import { Endereco } from '../../../modelo/Endereco';
+import { EnderecoService } from '../../../services/END_ENDERECOS/endereco.service';
+import { Usuario } from '../../../modelo/Usuario';
+import { UsuarioService } from '../../../services/USU_USUARIO/usuario.service';
 
 @Component({
   selector: 'app-tabela-4',
@@ -25,11 +29,17 @@ export class TabelaComponent implements OnInit {
   selectedVeiculos: Veiculo[] = [];
   motorista: Motorista | undefined;
 
-  constructor(private veiculoService: VeiculoService, private motoristaService: MotoristaService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
+  enderecos: Endereco[] = [];
+  SelectedEnderecos: Endereco[] = [];
+  usuario: Usuario | undefined | null;
+
+  constructor(private veiculoService: VeiculoService, private motoristaService: MotoristaService, private messageService: MessageService, private confirmationService: ConfirmationService, private enderecoService: EnderecoService, private usuarioService: UsuarioService) {}
 
   ngOnInit() {
     this.carregarVeiculos();
     this.carregarEstatisticasDoMotorista();
+    this.carregarEnderecos();
+    this.carregarUsuario();
   }
 
   carregarVeiculos() {
@@ -57,6 +67,20 @@ export class TabelaComponent implements OnInit {
     );
   }
 
+  carregarEnderecos(){
+    this.enderecoService.getEnderecosExcluidosDoUsuario().subscribe((data: Endereco[]) => {
+      console.log("teste: " + data[0]);
+      this.enderecos = data;
+    });
+  }
+
+  carregarUsuario(){
+    if(!((this.usuarioService.getCurrentUser()) == null))
+      this.usuario = this.usuarioService.getCurrentUser(); // Obter dados do usuário do Local Storage
+    else
+      this.usuario = new Usuario();
+  }
+
   ativarVeiculo(veiculo: Veiculo): void {
     this.confirmationService.confirm({
       message: 'Deseja ativar novamente esse veículo?',
@@ -79,6 +103,37 @@ export class TabelaComponent implements OnInit {
             console.error(`Erro ao reativar veículo com ID ${veiculo.veiId}`, error);
             this.messageService.add({ severity: 'warn', summary: 'Erro', detail: 'Veículo desabilitado com sucesso', life: 3000 });
             this.carregarVeiculos();
+          }
+        );
+      },
+      reject: () => {
+        // Optionally handle rejection or do nothing
+      }
+    });
+  }
+
+  ativarEndereco(endereco: Endereco): void {
+    this.confirmationService.confirm({
+      message: 'Deseja ativar novamente esse endereço?',
+      header: 'Confirmar ação',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const jsonUsuEnd = {
+          endereco: endereco,
+          usuario: this.usuario ? this.usuario : new Usuario() // Assuming you don't need to include motorista in this operation
+        };
+
+        this.enderecoService.alterarVisibilidadeDoMeuEndereco(jsonUsuEnd).subscribe(
+          (response: any) => {
+            console.log(`Endereco com id ${endereco.endId} ativado com sucesso`, response);
+            this.enderecos = this.enderecos.filter(e => e.endId !== endereco.endId);
+            this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Veículo desabilitado com sucesso', life: 3000 });
+            this.carregarEnderecos();
+          },
+          (error: any) => {
+            console.error(`Erro ao desabilitar veículo com ID ${endereco.endId}`, error);
+            this.messageService.add({ severity: 'warn', summary: 'Erro', detail: 'Veículo desabilitado com sucesso', life: 3000 });
+            this.carregarEnderecos();
           }
         );
       },
