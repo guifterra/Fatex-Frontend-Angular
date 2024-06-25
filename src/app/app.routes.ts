@@ -13,6 +13,7 @@ import { MeusVeiculosComponent } from './components/meus-veiculos/meus-veiculos.
 import { MeusEnderecosComponent } from './components/meus-enderecos/meus-enderecos.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { VisualizarCaronasComponent } from './components/visualizar-caronas/visualizar-caronas.component';
+import { ItensexcluidosComponent } from './components/itensexcluidos/itensexcluidos.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -30,7 +31,8 @@ export const routes: Routes = [
       { path: 'suporte', component: SuporteComponent },
       { path: 'meusVeiculos', component: MeusVeiculosComponent },
       { path: 'meusEnderecos', component: MeusEnderecosComponent },
-      { path: 'perfil', component: PerfilComponent }
+      { path: 'perfil', component: PerfilComponent },
+      { path: 'itensexcluidos', component: ItensexcluidosComponent }
     ],
   },
 ];

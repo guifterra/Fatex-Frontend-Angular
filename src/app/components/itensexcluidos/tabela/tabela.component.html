@@ -1,0 +1,70 @@
+@if( veiculos != [] && veiculos.length != 0 ){
+    <div class="card px-8">
+      <p-toast />
+      <p-table [value]="veiculos" [tableStyle]="{'min-width': '60rem'}">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th pSortableColumn="id" style="width:10%">ID</th>
+                  <th pSortableColumn="placa" style="width:20%">Placa</th>
+                  <th pSortableColumn="numero" style="width:10%">Cor</th>
+                  <th pSortableColumn="rua" style="width:20%">Qt de passageiros</th>
+                  <th pSortableColumn="bairro" style="width:20%">Modelo</th>
+                  <th pSortableColumn="cidade" style="width:20%">Marca</th>
+                  <th></th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-veiculos>
+              <tr>
+                  <td>{{veiculos.veiId}}</td>
+                  <td>{{veiculos.veiPlaca}}</td>
+                  <td>{{veiculos.veiCor}}</td>
+                  <td>{{veiculos.veiMaxPassageiros}}</td>
+                  <td>{{veiculos.modelo.modNome}}</td>
+                  <td>{{veiculos.marca.marNome}}</td>
+                  <p-button 
+                      pRipple 
+                      icon="pi pi-trash" 
+                      severity="danger" 
+                      [rounded]="true" 
+                      [outlined]="true" 
+                      (click)="ativarVeiculo(veiculos)" />
+              </tr>
+          </ng-template>
+      </p-table>
+    </div>
+    <p-confirmDialog #cd [dismissableMask]="true">
+      <ng-template pTemplate="headless" let-message>
+          <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+              <div class="border-circle text-white bg-m-red inline-flex justify-content-center align-items-center h-6rem w-6rem">
+                  <i class="pi pi-question text-5xl"></i>
+              </div>
+              <span class="font-bold text-2xl block mb-2 mt-4">
+                  {{ message.header }}
+              </span>
+              <p class="mb-0">{{ message.message }}</p>
+              <div class="flex align-items-center gap-5 mt-4">
+                <button 
+                      pButton 
+                      label="Cancelar"
+                      (click)="cd.reject()" 
+                      class="p-button-outlined w-8rem p-button-text">
+                  </button>  
+                <button 
+                      pButton 
+                      severity="danger"
+                      label="Deletar" 
+                      (click)="cd.accept()" 
+                      class="w-8rem p-button-text">
+                </button>
+              </div>
+          </div>
+      </ng-template>
+  </p-confirmDialog>
+  }@else{
+    <p class="text-center text-red-500 font-bold text-2xl mt-5">Você não possui veículos deletados cadastrados!</p>
+    <div class="flex justify-content-center">
+      <img src="../../../../assets/broken-car.png" class="w-2 h-2" alt="Algo deu errado">
+    </div>
+  }
+  
+  
