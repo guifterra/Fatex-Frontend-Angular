@@ -35,7 +35,7 @@ export class EnderecoService {
   getEnderecosExcluidosDoUsuario(): Observable<Endereco[]> {
     const currentUser = this.userService.getCurrentUser();
     if(currentUser){
-      return this.http.post<Endereco[]>(`${this.url}/listaDeEnderecosExcluidos`, currentUser);
+      return this.http.post<Endereco[]>(`${this.url}/listaDeEnderecosDeletados`, currentUser);
     } else {
       // Trate o caso em que não há usuário atualmente logado
       // Por exemplo, você pode retornar um Observable vazio ou lançar um erro
