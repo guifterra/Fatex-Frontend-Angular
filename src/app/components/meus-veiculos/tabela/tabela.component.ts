@@ -77,7 +77,7 @@ export class TabelaComponent implements OnInit {
           },
           (error: any) => {
             console.error(`Erro ao desabilitar veículo com ID ${veiculo.veiId}`, error);
-            this.messageService.add({ severity: 'success', summary: 'Erro', detail: 'Veículo desabilitado com sucesso', life: 3000 });
+            this.messageService.add({ severity: 'warn', summary: 'Erro', detail: 'Veículo desabilitado com sucesso', life: 3000 });
             this.carregarVeiculos();
           }
         );
