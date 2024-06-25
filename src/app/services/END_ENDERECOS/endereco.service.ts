@@ -32,7 +32,7 @@ export class EnderecoService {
     }
   }
 
-  alterarVisibilidadeDoMeuEndereco( obj:JsonUsuEnd ):void {
-    this.http.put(`${this.url}/alterarVisibilidadeDoMeuEndereco`, obj);
+  alterarVisibilidadeDoMeuEndereco( obj:JsonUsuEnd ): Observable<any> {
+    return this.http.put<any>(`${this.url}/alterarVisibilidadeDoMeuEndereco`, obj);
   }
 }
