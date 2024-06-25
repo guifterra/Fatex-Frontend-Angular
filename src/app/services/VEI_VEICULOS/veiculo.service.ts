@@ -34,6 +34,17 @@ export class VeiculoService {
     }
   }
 
+  getVeiculosExcluidosDoUsuario(): Observable<Veiculo[]> {
+    const currentUser = this.userService.getCurrentUser();
+    if(currentUser){
+      return this.http.post<Veiculo[]>(`${this.url}/listaDeVeiculosDeletados`, currentUser);
+    } else {
+      // Trate o caso em que não há usuário atualmente logado
+      // Por exemplo, você pode retornar um Observable vazio ou lançar um erro
+      return new Observable<Veiculo[]>(observer => observer.complete());
+    }
+  }
+
   editarVeiculo(obj:Veiculo):void {
     this.http.put(`${this.url}/editarVeiculo`, obj);
   }

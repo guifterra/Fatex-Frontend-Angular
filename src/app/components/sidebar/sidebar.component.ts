@@ -31,13 +31,14 @@ export class SidebarComponent {
                                   { icone: "pi-car" , texto: "Meus Veículos", rl: "meusVeiculos" },
                                   { icone: "pi-warehouse" , texto: "Meus Endereços", rl: "meusEnderecos" },
                                 ]
+    },
+    { title: "CONFIGURAÇÕES ADICIONAIS", btnValues: [
+                                                      // { icone: "pi-credit-card" , texto: "Pagamento", rl: "doacao" },
+                                                      // { icone: "pi-question-circle" , texto: "Suporte", rl: "suporte" },
+                                                      { icone: "pi-eraser" , texto: "Itens Excluidos", rl: "itensexcluidos" },
+                                                      { icone: "pi-user" , texto: "Perfil", rl: "perfil" }
+                                                    ]
     }
-    // { title: "CONFIGURAÇÕES ADICIONAIS", btnValues: [
-    //                                                   { icone: "pi-credit-card" , texto: "Pagamento", rl: "doacao" },
-    //                                                   { icone: "pi-question-circle" , texto: "Suporte", rl: "suporte" },
-    //                                                   { icone: "pi-cog" , texto: "Configurações", rl: "configuracoes" }
-    //                                                 ]
-    // }
   ];
 
   closeCallback(e: Event): void {
