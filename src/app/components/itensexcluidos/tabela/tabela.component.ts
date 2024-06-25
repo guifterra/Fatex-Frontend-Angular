@@ -96,12 +96,12 @@ export class TabelaComponent implements OnInit {
           (response: any) => {
             console.log(`Veículo com id ${veiculo.veiId} ativado com sucesso`, response);
             this.veiculos = this.veiculos.filter(v => v.veiId !== veiculo.veiId);
-            this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Veículo desabilitado com sucesso', life: 3000 });
+            this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Veículo ativado com sucesso', life: 3000 });
             this.carregarVeiculos();
           },
           (error: any) => {
             console.error(`Erro ao reativar veículo com ID ${veiculo.veiId}`, error);
-            this.messageService.add({ severity: 'warn', summary: 'Erro', detail: 'Veículo desabilitado com sucesso', life: 3000 });
+            this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Veículo ativado com sucesso', life: 3000 });
             this.carregarVeiculos();
           }
         );
@@ -127,12 +127,12 @@ export class TabelaComponent implements OnInit {
           (response: any) => {
             console.log(`Endereco com id ${endereco.endId} ativado com sucesso`, response);
             this.enderecos = this.enderecos.filter(e => e.endId !== endereco.endId);
-            this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Veículo desabilitado com sucesso', life: 3000 });
+            this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Endereco ativado com sucesso', life: 3000 });
             this.carregarEnderecos();
           },
           (error: any) => {
             console.error(`Erro ao desabilitar veículo com ID ${endereco.endId}`, error);
-            this.messageService.add({ severity: 'warn', summary: 'Erro', detail: 'Veículo desabilitado com sucesso', life: 3000 });
+            this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Endereco ativado com sucesso', life: 3000 });
             this.carregarEnderecos();
           }
         );
